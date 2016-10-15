@@ -1,2 +1,2 @@
 # Polly.Caching.MemoryCache
-MemCached plugin for the Polly Cache policy
+MemoryCache plugin for the Polly Cache policy
