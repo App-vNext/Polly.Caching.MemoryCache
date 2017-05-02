@@ -5,7 +5,7 @@ using Xunit;
 using Xunit.Extensions;
 using Polly.Caching.MemoryCache;
 
-namespace Polly.Caching.MemoryCache.Specs
+namespace Polly.Specs.Caching.MemoryCache
 {
     public class PolicySpecs
     {
