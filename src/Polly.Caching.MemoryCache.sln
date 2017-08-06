@@ -17,11 +17,11 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Polly.Caching.MemoryCache.S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polly.Caching.MemoryCache.Net45.Specs", "Polly.Caching.MemoryCache.Net45.Specs\Polly.Caching.MemoryCache.Net45.Specs.csproj", "{5F2BD87D-A7ED-433D-B7E3-F3072D07C1DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polly.Caching.MemoryCache.Pcl.Specs", "Polly.Caching.MemoryCache.Pcl.Specs\Polly.Caching.MemoryCache.Pcl.Specs.csproj", "{4AB46D16-0806-4F51-8677-D849BA87CB05}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polly.Caching.MemoryCache.NetStandard13.Specs", "Polly.Caching.MemoryCache.NetStandard13.Specs\Polly.Caching.MemoryCache.NetStandard13.Specs.csproj", "{4AB46D16-0806-4F51-8677-D849BA87CB05}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polly.Caching.MemoryCache.Net40Async", "Polly.Caching.MemoryCache.Net40Async\Polly.Caching.MemoryCache.Net40Async.csproj", "{D6A676C2-982D-42D1-AD21-FA53582A1C31}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polly.Caching.MemoryCache.NetStandard10", "Polly.Caching.MemoryCache.NetStandard10\Polly.Caching.MemoryCache.NetStandard10.csproj", "{5017174E-DAC5-4408-AB15-1F902F40C612}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polly.Caching.MemoryCache.NetStandard13", "Polly.Caching.MemoryCache.NetStandard13\Polly.Caching.MemoryCache.NetStandard13.csproj", "{5017174E-DAC5-4408-AB15-1F902F40C612}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polly.Caching.MemoryCache.Net40Async.Specs", "Polly.Caching.MemoryCache.Net40Async.Specs\Polly.Caching.MemoryCache.Net40Async.Specs.csproj", "{65062661-9E19-4FC6-859C-8B7811553E13}"
 EndProject

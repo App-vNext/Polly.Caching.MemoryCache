@@ -16,6 +16,15 @@ namespace Polly.Specs.Caching.MemoryCache
             SomeClass.SomeMethod().Should().BeTrue();
         }
 
-        
+        [Fact]
+        public void SomeTestWithPolly()
+        {
+            var breaker = Policy
+                .Handle<Exception>()
+                .CircuitBreaker(1, TimeSpan.Zero);
+
+            breaker.Invoking(b => b.Execute(() => throw new Exception())).ShouldThrow<Exception>();
+        }
+
     }
 }
