@@ -1,30 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <RootNamespace>Polly.Caching.MemoryCache</RootNamespace>
-    <TargetFramework>net40</TargetFramework>
+    <AssemblyName>Polly.Caching.MemoryCache</AssemblyName>
+    <AssemblyOriginatorKeyFile>..\Polly.Caching.MemoryCache.Net45\Polly.Caching.MemoryCache.snk</AssemblyOriginatorKeyFile>
+    <DefineConstants>TRACE;PORTABLE</DefineConstants>
+    <DefaultLanguage>en-US</DefaultLanguage>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <SkipValidatePackageReferences>true</SkipValidatePackageReferences>
+    <RootNamespace>Polly.Caching.MemoryCache</RootNamespace>
+    <TargetFramework>netstandard1.3</TargetFramework>
+    <NetStandardImplicitPackageVersion>1.6.1</NetStandardImplicitPackageVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>
-    <DefineConstants>TRACE;DEBUG;NET40</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <DefineConstants>TRACE;RELEASE;NET40</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Bcl" Version="1.1.10" />
-    <PackageReference Include="Microsoft.Bcl.Build" Version="1.0.21" />
-    <PackageReference Include="Nito.AsyncEx" Version="3.0.1" />
-    <PackageReference Include="Polly.Net40Async" Version="5.3.1" />
+    <NuSpecFile Include="$(SolutionDir)Polly.Caching.MemoryCache.nuspec">
+      <Visible>False</Visible>
+    </NuSpecFile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\GlobalAssemblyInfo.cs">

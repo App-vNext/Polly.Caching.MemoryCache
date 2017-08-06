@@ -45,7 +45,7 @@ var snkFile = srcDir + File(keyName);
 
 var projectToNugetFolderMap = new Dictionary<string, string[]>() {
     { "Net45"        , new [] {"net45"} },
-    { "NetStandard10", new [] {"netstandard1.0"} },
+    { "NetStandard13", new [] {"netstandard1.3"} },
     { "Net40Async"   , new [] {"net40"} },
 };
 
@@ -134,11 +134,11 @@ Task("__UpdateDotNetStandardAssemblyVersionNumber")
     // NOTE: TEMPORARY fix only, while GitVersionTask does not support .Net Standard assemblies.  See https://github.com/App-vNext/Polly/issues/176.  
     // This build Task can be removed when GitVersionTask supports .Net Standard assemblies.
     var assemblySemVer = gitVersionOutput["AssemblySemVer"].ToString();
-    Information("Updating NetStandard10 AssemblyVersion to {0}", assemblySemVer);
-    var replacedFiles = ReplaceRegexInFiles("./src/Polly.Caching.MemoryCache.NetStandard10/Properties/AssemblyInfo.cs", "AssemblyVersion[(]\".*\"[)]", "AssemblyVersion(\"" + assemblySemVer +"\")");
+    Information("Updating NetStandard1.3 AssemblyVersion to {0}", assemblySemVer);
+    var replacedFiles = ReplaceRegexInFiles("./src/Polly.NetStandard13/Properties/AssemblyInfo.cs", "AssemblyVersion[(]\".*\"[)]", "AssemblyVersion(\"" + assemblySemVer +"\")");
     if (!replacedFiles.Any())
     {
-        Information("NetStandard1.0 AssemblyVersion could not be updated.");
+        Information("NetStandard1.3 AssemblyVersion could not be updated.");
     }
 });
 
@@ -161,7 +161,7 @@ Task("__BuildSolutions")
             settings
                 .SetConfiguration(configuration)
                 .WithProperty("TreatWarningsAsErrors", "true")
-                .UseToolVersion(MSBuildToolVersion.NET46)
+                .UseToolVersion(MSBuildToolVersion.VS2017)
                 .SetVerbosity(Verbosity.Minimal)
                 .SetNodeReuse(false));
     }
@@ -170,9 +170,18 @@ Task("__BuildSolutions")
 Task("__RunTests")
     .Does(() =>
 {
-    XUnit2("./src/**/bin/" + configuration + "/*.Specs.dll", new XUnit2Settings {
+    XUnit2("./src/**/bin/" + configuration + "/**/*.Net4*.Specs.dll", new XUnit2Settings {
         OutputDirectory = testResultsDir,
         XmlReportV1 = true
+    });
+});
+
+Task("__RunDotnetTests")
+    .Does(() =>
+{
+    DotNetCoreTest("./src/Polly.Caching.MemoryCache.NetStandard13.Specs/Polly.Caching.MemoryCache.NetStandard13.Specs.csproj", new DotNetCoreTestSettings {
+        Configuration = configuration,
+        NoBuild = true
     });
 });
 
@@ -183,7 +192,7 @@ Task("__CopyOutputToNugetFolder")
         var sourceDir = srcDir + Directory(projectName + "." + project) + Directory("bin") + Directory(configuration);
 
         foreach(var targetFolder in projectToNugetFolderMap[project]) {
-            var destDir = buildDir + Directory("lib") + Directory(targetFolder);
+            var destDir = buildDir + Directory("lib");
 
             Information("Copying {0} -> {1}.", sourceDir, destDir);
             CopyDirectory(sourceDir, destDir);
@@ -258,6 +267,7 @@ Task("Build")
     .IsDependentOn("__UpdateAppVeyorBuildNumber")
     .IsDependentOn("__BuildSolutions")
     .IsDependentOn("__RunTests")
+    .IsDependentOn("__RunDotnetTests")
     .IsDependentOn("__CopyOutputToNugetFolder")
     .IsDependentOn("__CreateNugetPackage")
     .IsDependentOn("__StronglySignAssemblies")
