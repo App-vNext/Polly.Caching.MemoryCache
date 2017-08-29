@@ -4,6 +4,6 @@ using System.Runtime.CompilerServices;
 
 [assembly: AssemblyTitle("Polly.Caching.MemoryCache")]
 [assembly: AssemblyVersion("0.2.0.0")]
-[assembly: CLSCompliant(true)]
+[assembly: CLSCompliant(false)] // Because Microsoft.Extensions.Caching.Memory.MemoryCache, on which Polly.Caching.MemoryCache.NetStandard13 depends, is not CLSCompliant.
 
 [assembly: InternalsVisibleTo("Polly.Caching.MemoryCache.NetStandard13.Specs")]

@@ -21,12 +21,13 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Polly" Version="5.3.1" />
+    <PackageReference Include="Polly" Version="5.3.2-v5-3-x-cachebeta0001" />
     <PackageReference Include="FluentAssertions" Version="4.17.0" />
     <PackageReference Include="GitVersionTask" Version="3.1.2" />
     <PackageReference Include="xunit" Version="2.1.0" />
@@ -38,7 +39,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Polly.Caching.MemoryCache.Net45\Polly.Caching.MemoryCache.Net45.csproj"/>
+    <ProjectReference Include="..\Polly.Caching.MemoryCache.Net45\Polly.Caching.MemoryCache.Net45.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />

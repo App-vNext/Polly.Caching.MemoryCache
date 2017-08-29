@@ -9,6 +9,6 @@
     <Import_RootNamespace>Polly.Caching.MemoryCache.Specs</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)SomeClassSpecs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MemoryCacheProviderSpecs.cs" />
   </ItemGroup>
 </Project>
