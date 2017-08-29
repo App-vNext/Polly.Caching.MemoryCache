@@ -20,20 +20,20 @@ You can install the Strongly Named version via:
 
 # Supported targets
 
-Polly.Caching.MemoryCache supports [to come].
+Polly.Caching.MemoryCache supports .NET4.0, .NET4.5 and .NetStandard 1.3.
 
 ## Dependencies
 
-None 
+[To come]
 
-# How to use the MemoryCache plugin
+# How to use the Polly.Caching.MemoryCache plugin
 
 [To come]
 
 
 ## How to use the Polly Cache policy
 
-See the [Polly readme](https://github.com/App-vNext/Polly/wiki/Cache) or [deep doco on the Polly wiki](https://github.com/App-vNext/Polly/wiki/Cache).
+See the [To be expanded] [Polly readme](https://github.com/App-vNext/Polly/wiki/Cache) or [To be expanded] [deep doco on the Polly wiki](https://github.com/App-vNext/Polly/wiki/Cache).
 
 
 # Release notes
