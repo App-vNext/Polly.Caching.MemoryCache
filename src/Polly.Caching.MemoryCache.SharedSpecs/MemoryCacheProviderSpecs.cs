@@ -131,13 +131,22 @@ namespace Polly.Specs.Caching.MemoryCache
             Ttl ttl = new Ttl(shimTimeSpan, false);
             provider.Put(key, value, ttl);
 
-            Thread.Sleep(shimTimeSpan + shimTimeSpan);
-
+            // Initially (before ttl expires), should be able to get value from cache.
 #if PORTABLE
             object got;
             memoryCache.TryGetValue(key, out got);
 #else
             object got = memoryCache[key];
+#endif
+            got.Should().BeSameAs(value);
+
+            // Wait until the TTL on the cache item should have expired.
+            Thread.Sleep(shimTimeSpan + shimTimeSpan);
+
+#if PORTABLE
+            memoryCache.TryGetValue(key, out got);
+#else
+            got = memoryCache[key];
 #endif
 
             got.Should().NotBeSameAs(value);
