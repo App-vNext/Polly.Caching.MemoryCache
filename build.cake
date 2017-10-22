@@ -135,7 +135,7 @@ Task("__UpdateDotNetStandardAssemblyVersionNumber")
     // This build Task can be removed when GitVersionTask supports .Net Standard assemblies.
     var assemblySemVer = gitVersionOutput["AssemblySemVer"].ToString();
     Information("Updating NetStandard1.3 AssemblyVersion to {0}", assemblySemVer);
-    var replacedFiles = ReplaceRegexInFiles("./src/Polly.NetStandard13/Properties/AssemblyInfo.cs", "AssemblyVersion[(]\".*\"[)]", "AssemblyVersion(\"" + assemblySemVer +"\")");
+    var replacedFiles = ReplaceRegexInFiles("./src/Polly.Caching.MemoryCache.NetStandard13/Properties/AssemblyInfo.cs", "AssemblyVersion[(]\".*\"[)]", "AssemblyVersion(\"" + assemblySemVer +"\")");
     if (!replacedFiles.Any())
     {
         Information("NetStandard1.3 AssemblyVersion could not be updated.");

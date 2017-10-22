@@ -1,5 +1,10 @@
 # Polly.Caching.MemoryCache change log
 
+## 1.0-RC
+
+- Upgrade to Polly v5.4.0
+- Correctly state RC dependency (Polly v5.4.0)
+
 ## 0.2-beta
 
 - Beta implementation
