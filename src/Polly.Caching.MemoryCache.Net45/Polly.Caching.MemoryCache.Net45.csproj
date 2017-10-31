@@ -22,7 +22,7 @@
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
     <PackageReference Include="GitVersionTask" Version="3.1.2" />
-    <PackageReference Include="Polly" Version="5.3.2-v5-3-x-cachebeta0001" />
+    <PackageReference Include="Polly" Version="5.4.0" />
     <Reference Include="System" />
     <Reference Include="System.Runtime.Caching" />
   </ItemGroup>
