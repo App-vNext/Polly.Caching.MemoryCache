@@ -62,27 +62,29 @@ namespace Polly.Caching.MemoryCache
         /// <param name="ttl">The time-to-live for the cache entry.</param>
         public void Put(string key, object value, Ttl ttl)
         {
+            TimeSpan remaining = DateTimeOffset.MaxValue - SystemClock.DateTimeOffsetUtcNow();
+
 #if PORTABLE
             using (Microsoft.Extensions.Caching.Memory.ICacheEntry entry = _cache.CreateEntry(key)) { 
                 entry.Value = value;
                 if (ttl.SlidingExpiration)
                 {
-                    entry.SlidingExpiration = ttl.Timespan;
+                    entry.SlidingExpiration = ttl.Timespan < remaining ? ttl.Timespan : remaining;
                 }
                 else
                 {
-                    entry.AbsoluteExpirationRelativeToNow = ttl.Timespan;
+                    entry.AbsoluteExpirationRelativeToNow = ttl.Timespan < remaining ? ttl.Timespan : remaining;
                 }
             }
 #else
             System.Runtime.Caching.CacheItemPolicy cacheItemPolicy = new System.Runtime.Caching.CacheItemPolicy();
             if (ttl.SlidingExpiration)
             {
-                cacheItemPolicy.SlidingExpiration = ttl.Timespan;
+                cacheItemPolicy.SlidingExpiration = ttl.Timespan < remaining ? ttl.Timespan : remaining;
             }
             else
             {
-                cacheItemPolicy.AbsoluteExpiration = SystemClock.DateTimeOffsetUtcNow().Add(ttl.Timespan);
+                cacheItemPolicy.AbsoluteExpiration = ttl.Timespan < remaining ? SystemClock.DateTimeOffsetUtcNow().Add(ttl.Timespan) : DateTimeOffset.MaxValue;
             }
             _cache.Set(key, value, cacheItemPolicy);
 #endif
