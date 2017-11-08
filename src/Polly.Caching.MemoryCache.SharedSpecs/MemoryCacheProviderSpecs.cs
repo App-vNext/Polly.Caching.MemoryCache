@@ -53,7 +53,7 @@ namespace Polly.Specs.Caching.MemoryCache
             MemoryCacheImplementation memoryCache = System.Runtime.Caching.MemoryCache.Default;
 #endif
 
-            string key = "anything";
+            string key = Guid.NewGuid().ToString();
             object value = new object();
 #if PORTABLE
             using (Microsoft.Extensions.Caching.Memory.ICacheEntry entry = memoryCache.CreateEntry(key)) { 
@@ -96,7 +96,7 @@ namespace Polly.Specs.Caching.MemoryCache
             MemoryCacheImplementation memoryCache = System.Runtime.Caching.MemoryCache.Default;
 #endif
 
-            string key = "anything";
+            string key = Guid.NewGuid().ToString();
             object value = new object();
 
             MemoryCacheProvider provider = new MemoryCacheProvider(memoryCache);
@@ -124,7 +124,7 @@ namespace Polly.Specs.Caching.MemoryCache
 
             TimeSpan shimTimeSpan = TimeSpan.FromSeconds(0.1); // If test fails transiently in different environments, consider increasing shimTimeSpan.
 
-            string key = "anything";
+            string key = Guid.NewGuid().ToString();
             object value = new object();
 
             MemoryCacheProvider provider = new MemoryCacheProvider(memoryCache);
@@ -164,7 +164,7 @@ namespace Polly.Specs.Caching.MemoryCache
 
             TimeSpan shimTimeSpan = TimeSpan.FromSeconds(1); // If test fails transiently in different environments, consider increasing shimTimeSpan.
 
-            string key = "anything";
+            string key = Guid.NewGuid().ToString();
             object value = new object();
 
             // Place an item in the cache that should last for only 2x shimTimespan
