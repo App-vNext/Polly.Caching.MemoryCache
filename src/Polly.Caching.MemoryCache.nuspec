@@ -31,11 +31,11 @@
    </releaseNotes>
     <dependencies>
       <group targetFramework="net45">
-        <dependency id="Polly" version="5.4.0" />
+        <dependency id="Polly" version="5.9.0" />
       </group>
       <group targetFramework="netstandard1.3">
         <dependency id="NETStandard.Library" version="1.6.1" />
-        <dependency id="Polly" version="5.4.0" />
+        <dependency id="Polly" version="5.9.0" />
         <dependency id="Microsoft.Extensions.Caching.Memory" version="1.1.2" />
       </group>
       <group targetFramework="net40">
@@ -43,7 +43,7 @@
         <dependency id="Microsoft.Bcl" version="1.1.10" />
         <dependency id="Microsoft.Bcl.Build" version="1.0.21" />
         <dependency id="Nito.AsyncEx" version="3.0.1" />
-        <dependency id="Polly.Net40Async" version="5.4.0" />
+        <dependency id="Polly.Net40Async" version="5.9.0" />
       </group>
     </dependencies>
   </metadata>
