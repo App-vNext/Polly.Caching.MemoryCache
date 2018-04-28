@@ -28,7 +28,7 @@ Polly.Caching.MemoryCache supports .NET4.0, .NET4.5 and .NetStandard 1.3.
 
 ## Dependencies
 
-Polly.Caching.MemoryCache works with Polly v5.4.0 and above.
+Polly.Caching.MemoryCache works with Polly v5.9.0 and above.
 
 # How to use the Polly.Caching.MemoryCache plugin
 
@@ -64,14 +64,13 @@ public class Startup
     {
         services.AddMemoryCache();
         services.AddSingleton<Polly.Registry.IPolicyRegistry<string>, Polly.Registry.PolicyRegistry>();
+        services.AddSingleton<Polly.Caching.ISyncCacheProvider, Polly.Caching.MemoryCache.MemoryCacheProvider>(); // Or: IAsyncCacheProvider
         // ...
     }
 
-    public void Configure(..., IPolicyRegistry<string> policyRegistry, IMemoryCache memoryCache)
+    public void Configure(..., IPolicyRegistry<string> policyRegistry, ISyncCacheProvider cacheProvider)
     {
-        Polly.Caching.MemoryCache.MemoryCacheProvider memoryCacheProvider 
-            = new Polly.Caching.MemoryCache.MemoryCacheProvider(memoryCache);
-        var cachePolicy = Policy.Cache(memoryCacheProvider, TimeSpan.FromMinutes(5));
+        var cachePolicy = Policy.Cache(cacheProvider, TimeSpan.FromMinutes(5)); // Or: Policy.CacheAsync(IAsyncCacheProvider, ...)
         policyRegistry.Add("myCachePolicy", cachePolicy);
         // ...
     }
@@ -81,7 +80,7 @@ public class Startup
 // (magic string "myCachePolicy" only hard-coded here to keep the example simple!) 
 public MyController(IPolicyRegistry<string> policyRegistry)
 {
-    _cachePolicy = policyRegistry["myCachePolicy"];
+    var _cachePolicy = policyRegistry.Get<ISyncPolicy>("myCachePolicy");
     // ...
 }
 
