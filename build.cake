@@ -37,17 +37,26 @@ var artifactsDir = Directory("./artifacts");
 var testResultsDir = artifactsDir + Directory("test-results");
 
 // NuGet
-var nuspecFilename = projectName + ".nuspec";
-var nuspecSrcFile = srcDir + File(nuspecFilename);
-var nuspecDestFile = buildDir + File(nuspecFilename);
-var nupkgDestDir = artifactsDir + Directory("nuget-package");
+var nuspecExtension = ".nuspec";
+var signed = "-Signed";
+var nuspecFolder = "nuget-package";
+var nuspecSrcFile = srcDir + File(projectName + nuspecExtension);
+var nuspecDestFile = buildDir + File(projectName + nuspecExtension);
+var nuspecSignedDestFile = buildDir + File(projectName + signed + nuspecExtension);
+var nupkgDestDir = artifactsDir + Directory(nuspecFolder);
 var snkFile = srcDir + File(keyName);
 
 var projectToNugetFolderMap = new Dictionary<string, string[]>() {
-    { "Net45"        , new [] {"net45"} },
-    { "NetStandard13", new [] {"netstandard1.3"} },
-    { "Net40Async"   , new [] {"net40"} },
+    { "Net45"               , new [] {"net45"} },
+    { "NetStandard13"       , new [] {"netstandard1.3"} },
+    { "Net40Async"          , new [] {"net40"} },
+    { "Net45-Signed"        , new [] {"net45"} },
+    { "NetStandard13-Signed", new [] {"netstandard1.3"} },
+    { "Net40Async-Signed"   , new [] {"net40"} },
 };
+
+var netStandard = "NetStandard";
+var specs = "Specs";
 
 // Gitversion
 var gitVersionPath = ToolsExePath("GitVersion.exe");
@@ -83,12 +92,16 @@ Teardown(_ =>
 Task("__Clean")
     .Does(() =>
 {
-    CleanDirectories(new DirectoryPath[] {
+    DirectoryPath[] cleanDirectories = new DirectoryPath[] {
         buildDir,
-        artifactsDir,
         testResultsDir,
-        nupkgDestDir
-  	});
+        nupkgDestDir,
+        artifactsDir
+  	};
+
+    CleanDirectories(cleanDirectories);
+
+    foreach(var path in cleanDirectories) { EnsureDirectoryExists(path); }
 
     foreach(var path in solutionPaths)
     {
@@ -132,11 +145,18 @@ Task("__UpdateDotNetStandardAssemblyVersionNumber")
     // NOTE: TEMPORARY fix only, while GitVersionTask does not support .Net Standard assemblies.  See https://github.com/App-vNext/Polly/issues/176.  
     // This build Task can be removed when GitVersionTask supports .Net Standard assemblies.
     var assemblySemVer = gitVersionOutput["AssemblySemVer"].ToString();
-    Information("Updating NetStandard1.3 AssemblyVersion to {0}", assemblySemVer);
-    var replacedFiles = ReplaceRegexInFiles("./src/Polly.Caching.MemoryCache.NetStandard13/Properties/AssemblyInfo.cs", "AssemblyVersion[(]\".*\"[)]", "AssemblyVersion(\"" + assemblySemVer +"\")");
-    if (!replacedFiles.Any())
-    {
-        Information("NetStandard1.3 AssemblyVersion could not be updated.");
+    Information("Updating NetStandard AssemblyVersions to {0}", assemblySemVer);
+    var assemblyInfosToUpdate = GetFiles("./src/**/Properties/AssemblyInfo.cs")
+        .Select(f => f.FullPath)
+        .Where(f => f.Contains(netStandard))
+        .Where(f => !f.Contains(specs));
+
+    foreach(var assemblyInfo in assemblyInfosToUpdate) {
+        var replacedFiles = ReplaceRegexInFiles(assemblyInfo, "AssemblyVersion[(]\".*\"[)]", "AssemblyVersion(\"" + assemblySemVer +"\")");
+        if (!replacedFiles.Any())
+        {
+             throw new Exception("AssemblyVersion could not be updated in " + assemblyInfo + ".");
+        }
     }
 });
 
@@ -177,16 +197,24 @@ Task("__RunTests")
 Task("__RunDotnetTests")
     .Does(() =>
 {
-    DotNetCoreTest("./src/Polly.Caching.MemoryCache.NetStandard13.Specs/Polly.Caching.MemoryCache.NetStandard13.Specs.csproj", new DotNetCoreTestSettings {
-        Configuration = configuration,
-        NoBuild = true
-    });
+    foreach(var specsProj in GetFiles("./src/**/*.Specs.csproj")
+        .Select(f => f.FullPath)
+        .Where(f => f.Contains(netStandard))
+    )   {
+            DotNetCoreTest(specsProj, new DotNetCoreTestSettings {
+                Configuration = configuration,
+                NoBuild = true
+        });
+    }
 });
 
-Task("__CopyOutputToNugetFolder")
+
+Task("__CopyNonSignedOutputToNugetFolder")
     .Does(() =>
 {
-    foreach(var project in projectToNugetFolderMap.Keys) {
+    foreach(var project in projectToNugetFolderMap.Keys
+        .Where(p => !p.Contains(signed))
+    ) {
         var sourceDir = srcDir + Directory(projectName + "." + project) + Directory("bin") + Directory(configuration);
 
         foreach(var targetFolder in projectToNugetFolderMap[project]) {
@@ -200,7 +228,32 @@ Task("__CopyOutputToNugetFolder")
     CopyFile(nuspecSrcFile, nuspecDestFile);
 });
 
-Task("__CreateNugetPackage")
+Task("__CopySignedOutputToNugetFolder")
+    .Does(() =>
+{
+    foreach(var project in projectToNugetFolderMap.Keys
+        .Where(p => p.Contains(signed))
+    ) {
+        var sourceDir = srcDir + Directory(projectName + "." + project) + Directory("bin") + Directory(configuration);
+
+        foreach(var targetFolder in projectToNugetFolderMap[project]) {
+            var destDir = buildDir + Directory("lib");
+
+            Information("Copying {0} -> {1}.", sourceDir, destDir);
+            CopyDirectory(sourceDir, destDir);
+       }
+    }
+
+    CopyFile(nuspecSrcFile, nuspecSignedDestFile);
+
+    var replacedFiles = ReplaceRegexInFiles(nuspecSignedDestFile, "dependency id=\"(Polly\\S*)\"", "dependency id=\"$1-Signed\"");
+    if (!replacedFiles.Any())
+    {
+        throw new Exception("Could not set Polly dependency to Polly-Signed, for -Signed nuget package.");
+    }
+});
+
+Task("__CreateNonSignedNugetPackage")
     .Does(() =>
 {
     var nugetVersion = gitVersionOutput["NuGetVersion"].ToString();
@@ -238,7 +291,7 @@ Task("__CreateSignedNugetPackage")
     .Does(() =>
 {
     var nugetVersion = gitVersionOutput["NuGetVersion"].ToString();
-    var packageName = projectName + "-Signed";
+    var packageName = projectName + signed;
 
     Information("Building {0}.{1}.nupkg", packageName, nugetVersion);
 
@@ -249,7 +302,7 @@ Task("__CreateSignedNugetPackage")
         OutputDirectory = nupkgDestDir
     };
 
-    NuGetPack(nuspecDestFile, nuGetPackSettings);
+    NuGetPack(nuspecSignedDestFile, nuGetPackSettings);
 });
 
 
@@ -266,8 +319,9 @@ Task("Build")
     .IsDependentOn("__BuildSolutions")
     .IsDependentOn("__RunTests")
     .IsDependentOn("__RunDotnetTests")
-    .IsDependentOn("__CopyOutputToNugetFolder")
-    .IsDependentOn("__CreateNugetPackage")
+    .IsDependentOn("__CopyNonSignedOutputToNugetFolder")
+    .IsDependentOn("__CreateNonSignedNugetPackage")
+    .IsDependentOn("__CopySignedOutputToNugetFolder")
     .IsDependentOn("__StronglySignAssemblies")
     .IsDependentOn("__CreateSignedNugetPackage");
 
