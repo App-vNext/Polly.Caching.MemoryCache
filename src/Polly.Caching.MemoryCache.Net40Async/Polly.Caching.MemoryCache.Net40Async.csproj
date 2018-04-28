@@ -26,7 +26,7 @@
     <PackageReference Include="Microsoft.Bcl" Version="1.1.10" />
     <PackageReference Include="Microsoft.Bcl.Build" Version="1.0.21" />
     <PackageReference Include="Nito.AsyncEx" Version="3.0.1" />
-    <PackageReference Include="Polly.Net40Async" Version="5.4.0" />
+    <PackageReference Include="Polly.Net40Async" Version="5.9.0" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\GlobalAssemblyInfo.cs">

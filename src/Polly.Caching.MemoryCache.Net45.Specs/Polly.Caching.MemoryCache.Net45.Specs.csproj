@@ -27,7 +27,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Polly" Version="5.4.0" />
+    <PackageReference Include="Polly" Version="5.9.0" />
     <PackageReference Include="FluentAssertions" Version="4.17.0" />
     <PackageReference Include="GitVersionTask" Version="3.1.2" />
     <PackageReference Include="xunit" Version="2.1.0" />

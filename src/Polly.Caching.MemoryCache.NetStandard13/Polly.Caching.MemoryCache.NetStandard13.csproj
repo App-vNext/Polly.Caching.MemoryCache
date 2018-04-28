@@ -29,7 +29,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="1.1.2" />
-    <PackageReference Include="Polly" Version="5.4.0" />
+    <PackageReference Include="Polly" Version="5.9.0" />
   </ItemGroup>
   <Import Project="..\Polly.Caching.MemoryCache.Shared\Polly.Caching.MemoryCache.Shared.projitems" Label="Shared" />
 </Project>
