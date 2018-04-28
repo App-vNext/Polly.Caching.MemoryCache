@@ -87,7 +87,7 @@ public MyController(IPolicyRegistry<string> policyRegistry)
 
 ```
 
-For many more configuration options and usage examples of the main Polly `CachePolicy`, see the [main Polly readme](https://github.com/App-vNext/Polly/wiki/Cache) and [deep doco on the Polly wiki](https://github.com/App-vNext/Polly/wiki/Cache).
+For many more configuration options and usage examples of the main Polly `CachePolicy`, see the [main Polly readme](https://github.com/App-vNext/Polly#cache) and [deep doco on the Polly wiki](https://github.com/App-vNext/Polly/wiki/Cache).
 
 
 # Release notes
