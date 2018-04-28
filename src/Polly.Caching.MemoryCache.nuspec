@@ -10,22 +10,24 @@
     <licenseUrl>https://raw.github.com/App-vNext/Polly/master/LICENSE.txt</licenseUrl>
     <iconUrl>https://raw.github.com/App-vNext/Polly/master/Polly.png</iconUrl>
     <projectUrl>https://github.com/App-vNext/Polly.Caching.MemoryCache</projectUrl>
-    <tags>Exception Handling Resilience Transient Fault Policy Cache Aside Cache-aside</tags>
-    <copyright>Copyright © 2017, App vNext</copyright>
+    <tags>Polly Cache Caching Cache-aside</tags>
+    <copyright>Copyright © 2018, App vNext</copyright>
     <releaseNotes>
-     ## 1.0-RC
-
+     1.0-RC
+     ---------------------
      - Upgrade to Polly v5.4.0
      - Correctly state RC dependency (Polly v5.4.0)
 
-     ## 0.2-alpha
+     0.2-alpha
+     ---------------------
 
      - Upgrade to msbuild15 build process
      - Upgrade to Polly v5.3.1
 
-     ## 0.1-alpha
-
+     0.1-alpha
+     ---------------------
      - Stub repo for Polly.Caching.MemoryCache with first build script
+
    </releaseNotes>
     <dependencies>
       <group targetFramework="net45">
