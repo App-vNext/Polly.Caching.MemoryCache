@@ -1,5 +1,10 @@
 # Polly.Caching.MemoryCache change log
 
+## 1.1.0
+
+- Polly.Caching.MemoryCache-Signed now references Polly-Signed 
+- Reference Polly v5.9.0 to bring in cache fixes
+
 ## 1.0-RC
 
 - Upgrade to Polly v5.4.0
