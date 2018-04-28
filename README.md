@@ -80,7 +80,7 @@ public class Startup
 // (magic string "myCachePolicy" only hard-coded here to keep the example simple!) 
 public MyController(IPolicyRegistry<string> policyRegistry)
 {
-    var _cachePolicy = policyRegistry.Get<ISyncPolicy>("myCachePolicy");
+    var _cachePolicy = policyRegistry.Get<ISyncPolicy>("myCachePolicy"); // Or: IAsyncPolicy
     // ...
 }
 
