@@ -30,7 +30,7 @@
     <PackageReference Include="Microsoft.Bcl" Version="1.1.10" />
     <PackageReference Include="Microsoft.Bcl.Async" Version="1.0.168" />
     <PackageReference Include="Microsoft.Bcl.Build" Version="1.0.21" />
-    <PackageReference Include="Polly.Net40Async" Version="5.4.0" />
+    <PackageReference Include="Polly.Net40Async" Version="5.9.0" />
     <PackageReference Include="xunit" Version="2.1.0" />
     <PackageReference Include="xunit.extensibility.execution" Version="2.1.0" />
   </ItemGroup>
