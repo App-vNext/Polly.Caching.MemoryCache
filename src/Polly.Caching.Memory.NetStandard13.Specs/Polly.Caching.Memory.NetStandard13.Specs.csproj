@@ -2,7 +2,7 @@
   <PropertyGroup>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <OutputType>Library</OutputType>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
     <OutputTypeEx>library</OutputTypeEx>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -28,7 +28,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Polly.Caching.MemoryCache.NetStandard20\Polly.Caching.MemoryCache.NetStandard20.csproj" />
+    <ProjectReference Include="..\Polly.Caching.Memory.NetStandard13\Polly.Caching.Memory.NetStandard13.csproj" />
   </ItemGroup>
-  <Import Project="..\Polly.Caching.MemoryCache.SharedSpecs\Polly.Caching.MemoryCache.SharedSpecs.projitems" Label="Shared" />
+  <Import Project="..\Polly.Caching.Memory.SharedSpecs\Polly.Caching.Memory.SharedSpecs.projitems" Label="Shared" />
 </Project>
