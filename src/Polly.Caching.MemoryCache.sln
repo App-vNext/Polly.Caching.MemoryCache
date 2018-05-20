@@ -13,13 +13,13 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Polly.Caching.MemoryCache.S
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Polly.Caching.MemoryCache.SharedSpecs", "Polly.Caching.MemoryCache.SharedSpecs\Polly.Caching.MemoryCache.SharedSpecs.shproj", "{8D537C37-A4A2-4BE1-84BC-34F1AFB51CA8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polly.Caching.MemoryCache.NetStandard13-Signed", "Polly.Caching.MemoryCache.NetStandard13-Signed\Polly.Caching.MemoryCache.NetStandard13-Signed.csproj", "{AB362411-9786-4A45-8CBC-8BA88059D07C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polly.Caching.MemoryCache.NetStandard13-Signed.Specs", "Polly.Caching.MemoryCache.NetStandard13-Signed.Specs\Polly.Caching.MemoryCache.NetStandard13-Signed.Specs.csproj", "{AE19DF09-C475-46EC-96FE-A7E979219B92}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polly.Caching.MemoryCache.NetStandard20", "Polly.Caching.MemoryCache.NetStandard20\Polly.Caching.MemoryCache.NetStandard20.csproj", "{7B87EBE7-BC44-4993-A032-466C56F544B9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polly.Caching.MemoryCache.NetStandard20.Specs", "Polly.Caching.MemoryCache.NetStandard20.Specs\Polly.Caching.MemoryCache.NetStandard20.Specs.csproj", "{1FE78D2E-6827-4ED2-A292-1AD3BF8EAA2A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polly.Caching.MemoryCache.NetStandard13", "Polly.Caching.MemoryCache.NetStandard13\Polly.Caching.MemoryCache.NetStandard13.csproj", "{51B46826-1303-4865-8D57-E8D62571E187}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polly.Caching.MemoryCache.NetStandard13.Specs", "Polly.Caching.MemoryCache.NetStandard13.Specs\Polly.Caching.MemoryCache.NetStandard13.Specs.csproj", "{6033F3BD-1B82-4881-AD05-A8ACE9CC411B}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -31,14 +31,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AB362411-9786-4A45-8CBC-8BA88059D07C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AB362411-9786-4A45-8CBC-8BA88059D07C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AB362411-9786-4A45-8CBC-8BA88059D07C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AB362411-9786-4A45-8CBC-8BA88059D07C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AE19DF09-C475-46EC-96FE-A7E979219B92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AE19DF09-C475-46EC-96FE-A7E979219B92}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AE19DF09-C475-46EC-96FE-A7E979219B92}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AE19DF09-C475-46EC-96FE-A7E979219B92}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7B87EBE7-BC44-4993-A032-466C56F544B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7B87EBE7-BC44-4993-A032-466C56F544B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B87EBE7-BC44-4993-A032-466C56F544B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -47,6 +39,14 @@ Global
 		{1FE78D2E-6827-4ED2-A292-1AD3BF8EAA2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FE78D2E-6827-4ED2-A292-1AD3BF8EAA2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1FE78D2E-6827-4ED2-A292-1AD3BF8EAA2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51B46826-1303-4865-8D57-E8D62571E187}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51B46826-1303-4865-8D57-E8D62571E187}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51B46826-1303-4865-8D57-E8D62571E187}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51B46826-1303-4865-8D57-E8D62571E187}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6033F3BD-1B82-4881-AD05-A8ACE9CC411B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6033F3BD-1B82-4881-AD05-A8ACE9CC411B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6033F3BD-1B82-4881-AD05-A8ACE9CC411B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6033F3BD-1B82-4881-AD05-A8ACE9CC411B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

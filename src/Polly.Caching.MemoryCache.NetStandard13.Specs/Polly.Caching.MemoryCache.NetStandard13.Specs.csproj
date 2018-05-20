@@ -28,7 +28,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Polly.Caching.MemoryCache.NetStandard13-Signed\Polly.Caching.MemoryCache.NetStandard13-Signed.csproj" />
+    <ProjectReference Include="..\Polly.Caching.MemoryCache.NetStandard13\Polly.Caching.MemoryCache.NetStandard13.csproj" />
   </ItemGroup>
   <Import Project="..\Polly.Caching.MemoryCache.SharedSpecs\Polly.Caching.MemoryCache.SharedSpecs.projitems" Label="Shared" />
 </Project>
