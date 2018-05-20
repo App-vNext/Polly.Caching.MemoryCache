@@ -47,26 +47,25 @@ namespace Polly.Caching.Memory
         public void Put(string key, object value, Ttl ttl)
         {
             TimeSpan remaining = DateTimeOffset.MaxValue - SystemClock.DateTimeOffsetUtcNow();
+            MemoryCacheEntryOptions options = new MemoryCacheEntryOptions();
 
-            using (Microsoft.Extensions.Caching.Memory.ICacheEntry entry = _cache.CreateEntry(key))
+            if (ttl.SlidingExpiration)
             {
-                entry.Value = value;
-                if (ttl.SlidingExpiration)
+                options.SlidingExpiration = ttl.Timespan < remaining ? ttl.Timespan : remaining;
+            }
+            else
+            {
+                if (ttl.Timespan == TimeSpan.MaxValue)
                 {
-                    entry.SlidingExpiration = ttl.Timespan < remaining ? ttl.Timespan : remaining;
+                    options.AbsoluteExpiration = DateTimeOffset.MaxValue;
                 }
-                else
+else
                 {
-                    if (ttl.Timespan ==TimeSpan.MaxValue)
-                    {
-                        entry.AbsoluteExpiration = DateTimeOffset.MaxValue;
-                    }
-                    else
-                    {
-                        entry.AbsoluteExpirationRelativeToNow = ttl.Timespan < remaining ? ttl.Timespan : remaining;
-                    }
+                    options.AbsoluteExpirationRelativeToNow = ttl.Timespan < remaining ? ttl.Timespan : remaining;
                 }
             }
+
+            _cache.Set(key, value, options);
         }
 
         /// <summary>
