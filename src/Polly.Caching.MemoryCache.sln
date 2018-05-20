@@ -9,44 +9,44 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Polly.nuspec = Polly.nuspec
 	EndProjectSection
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Polly.Caching.MemoryCache.Shared", "Polly.Caching.MemoryCache.Shared\Polly.Caching.MemoryCache.Shared.shproj", "{23FA87F9-C77D-4C67-A0B0-2901DE51B3FF}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Polly.Caching.Memory.Shared", "Polly.Caching.Memory.Shared\Polly.Caching.Memory.Shared.shproj", "{23FA87F9-C77D-4C67-A0B0-2901DE51B3FF}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Polly.Caching.MemoryCache.SharedSpecs", "Polly.Caching.MemoryCache.SharedSpecs\Polly.Caching.MemoryCache.SharedSpecs.shproj", "{8D537C37-A4A2-4BE1-84BC-34F1AFB51CA8}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Polly.Caching.Memory.SharedSpecs", "Polly.Caching.Memory.SharedSpecs\Polly.Caching.Memory.SharedSpecs.shproj", "{8D537C37-A4A2-4BE1-84BC-34F1AFB51CA8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polly.Caching.MemoryCache.NetStandard20", "Polly.Caching.MemoryCache.NetStandard20\Polly.Caching.MemoryCache.NetStandard20.csproj", "{7B87EBE7-BC44-4993-A032-466C56F544B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polly.Caching.Memory.NetStandard13", "Polly.Caching.Memory.NetStandard13\Polly.Caching.Memory.NetStandard13.csproj", "{542F0446-583C-43EC-87E8-7A8139B00A7A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polly.Caching.MemoryCache.NetStandard20.Specs", "Polly.Caching.MemoryCache.NetStandard20.Specs\Polly.Caching.MemoryCache.NetStandard20.Specs.csproj", "{1FE78D2E-6827-4ED2-A292-1AD3BF8EAA2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polly.Caching.Memory.NetStandard13.Specs", "Polly.Caching.Memory.NetStandard13.Specs\Polly.Caching.Memory.NetStandard13.Specs.csproj", "{B59FF935-0741-4BDC-9F50-671550E68443}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polly.Caching.MemoryCache.NetStandard13", "Polly.Caching.MemoryCache.NetStandard13\Polly.Caching.MemoryCache.NetStandard13.csproj", "{51B46826-1303-4865-8D57-E8D62571E187}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polly.Caching.Memory.NetStandard20", "Polly.Caching.Memory.NetStandard20\Polly.Caching.Memory.NetStandard20.csproj", "{8B6B293E-99D2-4F00-83FB-830D0CFD4FE8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polly.Caching.MemoryCache.NetStandard13.Specs", "Polly.Caching.MemoryCache.NetStandard13.Specs\Polly.Caching.MemoryCache.NetStandard13.Specs.csproj", "{6033F3BD-1B82-4881-AD05-A8ACE9CC411B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polly.Caching.Memory.NetStandard20.Specs", "Polly.Caching.Memory.NetStandard20.Specs\Polly.Caching.Memory.NetStandard20.Specs.csproj", "{E74EE93B-FA19-4A06-A13F-C8E20176F974}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Polly.Caching.MemoryCache.Shared\Polly.Caching.MemoryCache.Shared.projitems*{23fa87f9-c77d-4c67-a0b0-2901de51b3ff}*SharedItemsImports = 13
-		Polly.Caching.MemoryCache.SharedSpecs\Polly.Caching.MemoryCache.SharedSpecs.projitems*{8d537c37-a4a2-4be1-84bc-34f1afb51ca8}*SharedItemsImports = 13
+		Polly.Caching.Memory.Shared\Polly.Caching.Memory.Shared.projitems*{23fa87f9-c77d-4c67-a0b0-2901de51b3ff}*SharedItemsImports = 13
+		Polly.Caching.Memory.SharedSpecs\Polly.Caching.Memory.SharedSpecs.projitems*{8d537c37-a4a2-4be1-84bc-34f1afb51ca8}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7B87EBE7-BC44-4993-A032-466C56F544B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7B87EBE7-BC44-4993-A032-466C56F544B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7B87EBE7-BC44-4993-A032-466C56F544B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7B87EBE7-BC44-4993-A032-466C56F544B9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1FE78D2E-6827-4ED2-A292-1AD3BF8EAA2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1FE78D2E-6827-4ED2-A292-1AD3BF8EAA2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1FE78D2E-6827-4ED2-A292-1AD3BF8EAA2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1FE78D2E-6827-4ED2-A292-1AD3BF8EAA2A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{51B46826-1303-4865-8D57-E8D62571E187}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{51B46826-1303-4865-8D57-E8D62571E187}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{51B46826-1303-4865-8D57-E8D62571E187}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{51B46826-1303-4865-8D57-E8D62571E187}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6033F3BD-1B82-4881-AD05-A8ACE9CC411B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6033F3BD-1B82-4881-AD05-A8ACE9CC411B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6033F3BD-1B82-4881-AD05-A8ACE9CC411B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6033F3BD-1B82-4881-AD05-A8ACE9CC411B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{542F0446-583C-43EC-87E8-7A8139B00A7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{542F0446-583C-43EC-87E8-7A8139B00A7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{542F0446-583C-43EC-87E8-7A8139B00A7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{542F0446-583C-43EC-87E8-7A8139B00A7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B59FF935-0741-4BDC-9F50-671550E68443}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B59FF935-0741-4BDC-9F50-671550E68443}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B59FF935-0741-4BDC-9F50-671550E68443}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B59FF935-0741-4BDC-9F50-671550E68443}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B6B293E-99D2-4F00-83FB-830D0CFD4FE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B6B293E-99D2-4F00-83FB-830D0CFD4FE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B6B293E-99D2-4F00-83FB-830D0CFD4FE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B6B293E-99D2-4F00-83FB-830D0CFD4FE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E74EE93B-FA19-4A06-A13F-C8E20176F974}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E74EE93B-FA19-4A06-A13F-C8E20176F974}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E74EE93B-FA19-4A06-A13F-C8E20176F974}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E74EE93B-FA19-4A06-A13F-C8E20176F974}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

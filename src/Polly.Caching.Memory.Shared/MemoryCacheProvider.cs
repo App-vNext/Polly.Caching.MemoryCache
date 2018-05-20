@@ -9,7 +9,7 @@ using MemoryCacheImplementation = Microsoft.Extensions.Caching.Memory.IMemoryCac
 using MemoryCacheImplementation = System.Runtime.Caching.MemoryCache;
 #endif
 
-namespace Polly.Caching.MemoryCache
+namespace Polly.Caching.Memory
 {
 #if PORTABLE
     /// <summary>

@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <AssemblyName>Polly.Caching.MemoryCache</AssemblyName>
+    <AssemblyName>Polly.Caching.Memory</AssemblyName>
     <AssemblyOriginatorKeyFile>..\Polly.Caching.MemoryCache.Net45\Polly.Caching.MemoryCache.snk</AssemblyOriginatorKeyFile>
     <DefineConstants>TRACE;PORTABLE</DefineConstants>
     <DefaultLanguage>en-US</DefaultLanguage>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <RootNamespace>Polly.Caching.MemoryCache</RootNamespace>
+    <RootNamespace>Polly.Caching.Memory</RootNamespace>
     <TargetFramework>netstandard2.0</TargetFramework>
     <NetStandardImplicitPackageVersion>2.0</NetStandardImplicitPackageVersion>
   </PropertyGroup>
@@ -18,7 +18,7 @@
     <Optimize>true</Optimize>
   </PropertyGroup>
   <ItemGroup>
-    <NuSpecFile Include="$(SolutionDir)Polly.Caching.MemoryCache.nuspec">
+    <NuSpecFile Include="$(SolutionDir)Polly.Caching.Memory.nuspec">
       <Visible>False</Visible>
     </NuSpecFile>
   </ItemGroup>
@@ -31,5 +31,5 @@
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="1.1.2" />
     <PackageReference Include="Polly-Signed" Version="5.9.0" />
   </ItemGroup>
-  <Import Project="..\Polly.Caching.MemoryCache.Shared\Polly.Caching.MemoryCache.Shared.projitems" Label="Shared" />
+  <Import Project="..\Polly.Caching.Memory.Shared\Polly.Caching.Memory.Shared.projitems" Label="Shared" />
 </Project>

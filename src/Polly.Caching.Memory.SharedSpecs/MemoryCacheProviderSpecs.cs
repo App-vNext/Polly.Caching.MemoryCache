@@ -3,15 +3,16 @@ using System.Threading;
 using FluentAssertions;
 using Polly.Caching;
 using Xunit;
-using Polly.Caching.MemoryCache;
+using Polly.Caching.Memory;
 
 #if PORTABLE
+
 using MemoryCacheImplementation = Microsoft.Extensions.Caching.Memory.IMemoryCache;
 #else
 using MemoryCacheImplementation = System.Runtime.Caching.MemoryCache;
 #endif
 
-namespace Polly.Specs.Caching.MemoryCache
+namespace Polly.Specs.Caching.Memory
 {
     public class MemoryCacheProviderSpecs
     {
