@@ -25,7 +25,7 @@ using System.Text.Json;
 // GLOBAL VARIABLES
 ///////////////////////////////////////////////////////////////////////////////
 
-var projectName = "Polly.Caching.MemoryCache";
+var projectName = "Polly.Caching.Memory";
 var keyName = "Polly.snk";
 
 var solutions = GetFiles("./**/*.sln");
@@ -38,29 +38,26 @@ var testResultsDir = artifactsDir + Directory("test-results");
 
 // NuGet
 var nuspecExtension = ".nuspec";
-var signed = "-Signed";
 var nuspecFolder = "nuget-package";
 var nuspecSrcFile = srcDir + File(projectName + nuspecExtension);
 var nuspecDestFile = buildDir + File(projectName + nuspecExtension);
-var nuspecSignedDestFile = buildDir + File(projectName + signed + nuspecExtension);
 var nupkgDestDir = artifactsDir + Directory(nuspecFolder);
 var snkFile = srcDir + File(keyName);
 
 var projectToNugetFolderMap = new Dictionary<string, string[]>() {
-    { "Net45"               , new [] {"net45"} },
-    { "NetStandard13"       , new [] {"netstandard1.3"} },
-    { "Net40Async"          , new [] {"net40"} },
-    { "Net45-Signed"        , new [] {"net45"} },
-    { "NetStandard13-Signed", new [] {"netstandard1.3"} },
-    { "Net40Async-Signed"   , new [] {"net40"} },
+    { "NetStandard13", new [] {"netstandard1.3"} },
+    { "NetStandard20", new [] {"netstandard2.0"} },
 };
-
-var netStandard = "NetStandard";
-var specs = "Specs";
 
 // Gitversion
 var gitVersionPath = ToolsExePath("GitVersion.exe");
 Dictionary<string, object> gitVersionOutput;
+
+// Versioning
+string nugetVersion;
+string appveyorBuildNumber;
+string assemblyVersion;
+string assemblySemver;
 
 // StrongNameSigner
 var strongNameSignerPath = ToolsExePath("StrongNameSigner.Console.exe");
@@ -72,12 +69,13 @@ var strongNameSignerPath = ToolsExePath("StrongNameSigner.Console.exe");
 
 Setup(_ =>
 {
-    Information(@"");
-    Information(@" ____   __   __    __    _  _   ___   __    ___  _  _  __  __ _   ___     _  _  ____  _  _   __  ____  _  _  ___   __    ___  _  _  ____ ");
-    Information(@"(  _ \ /  \ (  )  (  )  ( \/ ) / __) / _\  / __)/ )( \(  )(  ( \ / __)   ( \/ )(  __)( \/ ) /  \(  _ \( \/ )/ __) / _\  / __)/ )( \(  __)");
-    Information(@" ) __/(  O )/ (_/\/ (_/\ )  /_( (__ /    \( (__ ) __ ( )( /    /( (_ \ _ / \/ \ ) _) / \/ \(  O ))   / )  /( (__ /    \( (__ ) __ ( ) _) ");
-    Information(@"(__)   \__/ \____/\____/(__/(_)\___)\_/\_/ \___)\_)(_/(__)\_)__) \___/(_)\_)(_/(____)\_)(_/ \__/(__\_)(__/  \___)\_/\_/ \___)\_)(_/(____)");
-    Information(@"");
+    Information("");
+    Information(@" ____   __   __    __    _  _   ____  _  _  ____  ____  __ _  ____  __  __   __ _  ____     _  _  ____  ____  ____ ");
+    Information(@"(  _ \ /  \ (  )  (  )  ( \/ ) (  __)( \/ )(_  _)(  __)(  ( \/ ___)(  )/  \ (  ( \/ ___)   / )( \(_  _)(_  _)(  _ \");
+    Information(@" ) __/(  O )/ (_/\/ (_/\ )  /_  ) _)  )  (   )(   ) _) /    /\___ \ )((  O )/    /\___ \ _ ) __ (  )(    )(   ) __/");
+    Information(@"(__)   \__/ \____/\____/(__/(_)(____)(_/\_) (__) (____)\_)__)(____/(__)\__/ \_)__)(____/(_)\_)(_/ (__)  (__) (__)  ");
+
+    Information("");
 });
 
 Teardown(_ =>
@@ -134,38 +132,62 @@ Task("__UpdateAssemblyVersionInformation")
     gitVersionOutput = new JsonParser().Parse<Dictionary<string, object>>(output);
 
     Information("Updated GlobalAssemblyInfo");
-    Information("AssemblyVersion -> {0}", gitVersionOutput["AssemblySemVer"]);
-    Information("AssemblyFileVersion -> {0}", gitVersionOutput["MajorMinorPatch"]);
-    Information("AssemblyInformationalVersion -> {0}", gitVersionOutput["InformationalVersion"]);
+
+    Information("");
+    Information("Obtained raw version info for package versioning:");
+    Information("NuGetVersion -> {0}", gitVersionOutput["NuGetVersion"]);
+    Information("FullSemVer -> {0}", gitVersionOutput["FullSemVer"]);
+    Information("AssemblySemVer -> {0}", gitVersionOutput["AssemblySemVer"]);
+
+    appveyorBuildNumber = gitVersionOutput["FullSemVer"].ToString();
+    nugetVersion = gitVersionOutput["NuGetVersion"].ToString();
+    assemblyVersion = gitVersionOutput["Major"].ToString() + ".0.0.0";
+    assemblySemver = gitVersionOutput["AssemblySemVer"].ToString();
+
+    Information("");
+    Information("Mapping versioning information to:");
+    Information("Appveyor build number -> {0}", appveyorBuildNumber);
+    Information("Nuget package version -> {0}", nugetVersion);
+    Information("AssemblyVersion -> {0}", assemblyVersion);
+    Information("AssemblyFileVersion -> {0}", assemblySemver);
+    Information("AssemblyInformationalVersion -> {0}", assemblySemver);
 });
 
 Task("__UpdateDotNetStandardAssemblyVersionNumber")
     .Does(() =>
 {
-    // NOTE: TEMPORARY fix only, while GitVersionTask does not support .Net Standard assemblies.  See https://github.com/App-vNext/Polly/issues/176.  
-    // This build Task can be removed when GitVersionTask supports .Net Standard assemblies.
-    var assemblySemVer = gitVersionOutput["AssemblySemVer"].ToString();
-    Information("Updating NetStandard AssemblyVersions to {0}", assemblySemVer);
+    Information("Updating Assembly Version Information");
+
+    var attributeToValueMap = new Dictionary<string, string>() {
+        { "AssemblyVersion", assemblyVersion },
+        { "AssemblyFileVersion", assemblySemver },
+        { "AssemblyInformationalVersion", assemblySemver },
+    };
+
     var assemblyInfosToUpdate = GetFiles("./src/**/Properties/AssemblyInfo.cs")
         .Select(f => f.FullPath)
-        .Where(f => f.Contains(netStandard))
-        .Where(f => !f.Contains(specs));
+        .Where(f => !f.Contains("Specs"));
 
-    foreach(var assemblyInfo in assemblyInfosToUpdate) {
-        var replacedFiles = ReplaceRegexInFiles(assemblyInfo, "AssemblyVersion[(]\".*\"[)]", "AssemblyVersion(\"" + assemblySemVer +"\")");
-        if (!replacedFiles.Any())
-        {
-             throw new Exception("AssemblyVersion could not be updated in " + assemblyInfo + ".");
+    foreach(var attributeMap in attributeToValueMap) {
+        var attribute = attributeMap.Key;
+        var value = attributeMap.Value;
+
+        foreach(var assemblyInfo in assemblyInfosToUpdate) {
+            var replacedFiles = ReplaceRegexInFiles(assemblyInfo, attribute + "[(]\".*\"[)]", attribute + "(\"" + value +"\")");
+            if (!replacedFiles.Any())
+            {
+                throw new Exception($"{attribute} attribute could not be updated in {assemblyInfo}.");
+            }
         }
     }
+
 });
 
 Task("__UpdateAppVeyorBuildNumber")
     .WithCriteria(() => AppVeyor.IsRunningOnAppVeyor)
     .Does(() =>
 {
-    var fullSemVer = gitVersionOutput["FullSemVer"].ToString();
-    AppVeyor.UpdateBuildVersion(fullSemVer);
+    AppVeyor.UpdateBuildVersion(appveyorBuildNumber);
 });
 
 Task("__BuildSolutions")
@@ -188,33 +210,18 @@ Task("__BuildSolutions")
 Task("__RunTests")
     .Does(() =>
 {
-    XUnit2("./src/**/bin/" + configuration + "/**/*.Net4*.Specs.dll", new XUnit2Settings {
-        OutputDirectory = testResultsDir,
-        XmlReportV1 = true
-    });
-});
-
-Task("__RunDotnetTests")
-    .Does(() =>
-{
-    foreach(var specsProj in GetFiles("./src/**/*.Specs.csproj")
-        .Select(f => f.FullPath)
-        .Where(f => f.Contains(netStandard))
-    )   {
-            DotNetCoreTest(specsProj, new DotNetCoreTestSettings {
-                Configuration = configuration,
-                NoBuild = true
+    foreach(var specsProj in GetFiles("./src/**/*.Specs.csproj")) {
+        DotNetCoreTest(specsProj.FullPath, new DotNetCoreTestSettings {
+            Configuration = configuration,
+            NoBuild = true
         });
     }
 });
 
-
-Task("__CopyNonSignedOutputToNugetFolder")
+Task("__CopyOutputToNugetFolder")
     .Does(() =>
 {
-    foreach(var project in projectToNugetFolderMap.Keys
-        .Where(p => !p.Contains(signed))
-    ) {
+    foreach(var project in projectToNugetFolderMap.Keys) {
         var sourceDir = srcDir + Directory(projectName + "." + project) + Directory("bin") + Directory(configuration);
 
         foreach(var targetFolder in projectToNugetFolderMap[project]) {
@@ -226,49 +233,6 @@ Task("__CopyNonSignedOutputToNugetFolder")
     }
 
     CopyFile(nuspecSrcFile, nuspecDestFile);
-});
-
-Task("__CopySignedOutputToNugetFolder")
-    .Does(() =>
-{
-    foreach(var project in projectToNugetFolderMap.Keys
-        .Where(p => p.Contains(signed))
-    ) {
-        var sourceDir = srcDir + Directory(projectName + "." + project) + Directory("bin") + Directory(configuration);
-
-        foreach(var targetFolder in projectToNugetFolderMap[project]) {
-            var destDir = buildDir + Directory("lib");
-
-            Information("Copying {0} -> {1}.", sourceDir, destDir);
-            CopyDirectory(sourceDir, destDir);
-       }
-    }
-
-    CopyFile(nuspecSrcFile, nuspecSignedDestFile);
-
-    var replacedFiles = ReplaceRegexInFiles(nuspecSignedDestFile, "dependency id=\"(Polly\\S*)\"", "dependency id=\"$1-Signed\"");
-    if (!replacedFiles.Any())
-    {
-        throw new Exception("Could not set Polly dependency to Polly-Signed, for -Signed nuget package.");
-    }
-});
-
-Task("__CreateNonSignedNugetPackage")
-    .Does(() =>
-{
-    var nugetVersion = gitVersionOutput["NuGetVersion"].ToString();
-    var packageName = projectName;
-
-    Information("Building {0}.{1}.nupkg", packageName, nugetVersion);
-
-    var nuGetPackSettings = new NuGetPackSettings {
-        Id = packageName,
-        Title = packageName,
-        Version = nugetVersion,
-        OutputDirectory = nupkgDestDir
-    };
-
-    NuGetPack(nuspecDestFile, nuGetPackSettings);
 });
 
 Task("__StronglySignAssemblies")
@@ -290,8 +254,7 @@ Task("__StronglySignAssemblies")
 Task("__CreateSignedNugetPackage")
     .Does(() =>
 {
-    var nugetVersion = gitVersionOutput["NuGetVersion"].ToString();
-    var packageName = projectName + signed;
+    var packageName = projectName;
 
     Information("Building {0}.{1}.nupkg", packageName, nugetVersion);
 
@@ -302,9 +265,8 @@ Task("__CreateSignedNugetPackage")
         OutputDirectory = nupkgDestDir
     };
 
-    NuGetPack(nuspecSignedDestFile, nuGetPackSettings);
+    NuGetPack(nuspecDestFile, nuGetPackSettings);
 });
-
 
 //////////////////////////////////////////////////////////////////////
 // BUILD TASKS
@@ -318,10 +280,7 @@ Task("Build")
     .IsDependentOn("__UpdateAppVeyorBuildNumber")
     .IsDependentOn("__BuildSolutions")
     .IsDependentOn("__RunTests")
-    .IsDependentOn("__RunDotnetTests")
-    .IsDependentOn("__CopyNonSignedOutputToNugetFolder")
-    .IsDependentOn("__CreateNonSignedNugetPackage")
-    .IsDependentOn("__CopySignedOutputToNugetFolder")
+    .IsDependentOn("__CopyOutputToNugetFolder")
     .IsDependentOn("__StronglySignAssemblies")
     .IsDependentOn("__CreateSignedNugetPackage");
 
