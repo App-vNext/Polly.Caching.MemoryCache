@@ -63,24 +63,24 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddMemoryCache();
-        services.AddSingleton<Polly.Registry.IPolicyRegistry<string>, Polly.Registry.PolicyRegistry>();
-        services.AddSingleton<Polly.Caching.ISyncCacheProvider, Polly.Caching.MemoryCache.MemoryCacheProvider>(); // Or: IAsyncCacheProvider
-        // ...
-    }
+        services.AddSingleton<Polly.Caching.IAsyncCacheProvider, Polly.Caching.Memory.MemoryCacheProvider>();
 
-    public void Configure(..., IPolicyRegistry<string> policyRegistry, ISyncCacheProvider cacheProvider)
-    {
-        var cachePolicy = Policy.Cache(cacheProvider, TimeSpan.FromMinutes(5)); // Or: Policy.CacheAsync(IAsyncCacheProvider, ...)
-        policyRegistry.Add("myCachePolicy", cachePolicy);
+        services.AddSingleton<Polly.Registry.IPolicyRegistry<string>, Polly.Registry.PolicyRegistry>((serviceProvider) =>
+        {
+            PolicyRegistry registry = new PolicyRegistry();
+            registry.Add("myCachePolicy", Policy.CacheAsync<HttpResponseMessage>(serviceProvider.GetRequiredService<IAsyncCacheProvider>(), TimeSpan.FromMinutes(5)));
+            return registry;
+        });
+
         // ...
     }
 }
 
 // In a controller, inject the policyRegistry and retrieve the policy:
-// (magic string "myCachePolicy" only hard-coded here to keep the example simple!) 
+// (magic string "myCachePolicy" only hard-coded here to keep the example simple) 
 public MyController(IPolicyRegistry<string> policyRegistry)
 {
-    var _cachePolicy = policyRegistry.Get<ISyncPolicy>("myCachePolicy"); // Or: IAsyncPolicy
+    var _cachePolicy = policyRegistry.Get<IAsyncPolicy<HttpResponseMessage>>("myCachePolicy"); 
     // ...
 }
 
