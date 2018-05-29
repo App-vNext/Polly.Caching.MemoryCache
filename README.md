@@ -1,12 +1,12 @@
-# Polly.Caching.MemoryCache
+# Polly.Caching.Memory
 
-This repo contains the MemoryCache plugin for the [Polly](https://github.com/App-vNext/Polly) [Cache policy](https://github.com/App-vNext/Polly/wiki/Cache).  It targets .NET 4.0, .NET 4.5 and .NET Standard 1.3.
+This repo contains the MemoryCache plugin for the [Polly](https://github.com/App-vNext/Polly) [Cache policy](https://github.com/App-vNext/Polly/wiki/Cache).  The current version targets .NET Standard 1.3 and .NET Standard 2.0.
 
-[![NuGet version](https://badge.fury.io/nu/Polly.Caching.MemoryCache.svg)](https://badge.fury.io/nu/Polly.Caching.MemoryCache) [![Build status](https://ci.appveyor.com/api/projects/status/pgd89nfdr9u4ig8m?svg=true)](https://ci.appveyor.com/project/joelhulen/polly-caching-memorycache) [![Slack Status](http://www.pollytalk.org/badge.svg)](http://www.pollytalk.org)
+[![NuGet version](https://badge.fury.io/nu/Polly.Caching.Memory.svg)](https://badge.fury.io/nu/Polly.Caching.Memory) [![Build status](https://ci.appveyor.com/api/projects/status/pgd89nfdr9u4ig8m?svg=true)](https://ci.appveyor.com/project/joelhulen/polly-caching-Memory) [![Slack Status](http://www.pollytalk.org/badge.svg)](http://www.pollytalk.org)
 
 ## What is Polly?
 
-[Polly](https://github.com/App-vNext/Polly) is a .NET resilience and transient-fault-handling library that allows developers to express policies such as Retry, Circuit Breaker, Timeout, Bulkhead Isolation, Cache aside and Fallback in a fluent and thread-safe manner. Polly targets .NET 4.0, .NET 4.5 and .NET Standard 1.1. 
+[Polly](https://github.com/App-vNext/Polly) is a .NET resilience and transient-fault-handling library that allows developers to express policies such as Retry, Circuit Breaker, Timeout, Bulkhead Isolation, Cache aside and Fallback in a fluent and thread-safe manner. Polly targets .NET Standard 1.1 and .NET Standrad 2.0. 
 
 Polly is a member of the [.NET Foundation](https://www.dotnetfoundation.org/about)!
 
@@ -14,39 +14,40 @@ Polly is a member of the [.NET Foundation](https://www.dotnetfoundation.org/abou
 
 ![](https://raw.github.com/App-vNext/Polly/master/Polly-Logo.png)
 
-# Installing Polly.Caching.MemoryCache via NuGet
+# Installing Polly.Caching.Memory via NuGet
 
-    Install-Package Polly.Caching.MemoryCache
+    Install-Package Polly.Caching.Memory
 
-You can install the Strongly Named version via: 
-
-    Install-Package Polly.Caching.MemoryCache-Signed
 
 # Supported targets
 
-Polly.Caching.MemoryCache supports .NET4.0, .NET4.5 and .NetStandard 1.3.
+Polly.Caching.Memory &gt;= v2.0 supports .NET Standard 1.3 and .NET Standard 2.0.
+
+Polly.Caching.MemoryCache &lt;v2.0 supports .NET4.0, .NET4.5 and .NetStandard 1.3
 
 ## Dependencies
 
-Polly.Caching.MemoryCache works with Polly v5.9.0 and above.
+Polly.Caching.Memory &gt;= v2.0 works with Polly v6.0.1 and above.
 
-# How to use the Polly.Caching.MemoryCache plugin
+Polly.Caching.MemoryCache &lt;v2.0 works with Polly v5.9.0 and above.
+
+# How to use the Polly.Caching.Memory plugin
 
 ```csharp
-// (1a): Create a MemoryCacheProvider instance in the .NET Framework, using the Polly.Caching.MemoryCache nuget package.
+// (1a): Create a MemoryCacheProvider instance in the .NET Framework, using the Polly.Caching.Memory nuget package.
 // (full namespaces and types only shown here for disambiguation)
-Polly.Caching.MemoryCache.MemoryCacheProvider memoryCacheProvider 
-   = new Polly.Caching.MemoryCache.MemoryCacheProvider(System.Runtime.Caching.MemoryCache.Default);
+Polly.Caching.Memory.MemoryCacheProvider memoryCacheProvider 
+   = new Polly.Caching.Memory.MemoryCacheProvider(System.Runtime.Caching.MemoryCache.Default);
 
 // Or (1b): Create a MemoryCacheProvider instance in .NET Core / .NET Standard.
 // (full namespaces and types only shown here for disambiguation)
 // NB Only if you want to create your own Microsoft.Extensions.Caching.Memory.MemoryCache instance:
 Microsoft.Extensions.Caching.Memory.IMemoryCache memoryCache 
    = new Microsoft.Extensions.Caching.Memory.MemoryCache(new Microsoft.Extensions.Caching.Memory.MemoryCacheOptions());
-Polly.Caching.MemoryCache.MemoryCacheProvider memoryCacheProvider 
-   = new Polly.Caching.MemoryCache.MemoryCacheProvider(memoryCache);
+Polly.Caching.Memory.MemoryCacheProvider memoryCacheProvider 
+   = new Polly.Caching.Memory.MemoryCacheProvider(memoryCache);
 
-// (2) Create a Polly cache policy using that Polly.Caching.MemoryCache.MemoryCacheProvider instance.
+// (2) Create a Polly cache policy using that Polly.Caching.Memory.MemoryCacheProvider instance.
 var cachePolicy = Policy.Cache(memoryCacheProvider, TimeSpan.FromMinutes(5));
 
 
@@ -64,7 +65,7 @@ public class Startup
     {
         services.AddMemoryCache();
         services.AddSingleton<Polly.Registry.IPolicyRegistry<string>, Polly.Registry.PolicyRegistry>();
-        services.AddSingleton<Polly.Caching.ISyncCacheProvider, Polly.Caching.MemoryCache.MemoryCacheProvider>(); // Or: IAsyncCacheProvider
+        services.AddSingleton<Polly.Caching.ISyncCacheProvider, Polly.Caching.Memory.MemoryCacheProvider>(); // Or: IAsyncCacheProvider
         // ...
     }
 
@@ -99,6 +100,7 @@ For details of changes by release see the [change log](CHANGELOG.md).
 * [@reisenberger](https://github.com/reisenberger) - MemoryCache implementation
 * [@seanfarrow](https://github.com/seanfarrow) and [@reisenberger](https://github.com/reisenberger) - Initial caching architecture in the main Polly repo
 * [@kesmy](https://github.com/kesmy) - original structuring of the build for msbuild15, in the main Polly repo
+* [@seanfarrow](https://github.com/seanfarrow) - v2.0 update to Signed packages only to correspond with Polly v6.0.1
 
 
 # Instructions for Contributing
