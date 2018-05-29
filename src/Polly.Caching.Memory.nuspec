@@ -13,11 +13,13 @@
     <tags>Polly Cache Caching Cache-aside</tags>
     <copyright>Copyright © 2018, App vNext</copyright>
     <releaseNotes>
- 2.0.0
+     2.0.0
      ---------------------
-- we now reference Polly version 6.0.1.
-- The namespaces have changed from Polly.Caching.MemoryCache to Polly.Caching.Memory.
-- .net 4 and 4.5 support has been removed with .net standard 2.0 added
+     - Provide a single signed package only.
+     - Reference Polly v6.0.1.
+     - Remove .net 4 and 4.5 support. 
+     - Add .net standard 2.0 as a target framework.
+     - Rename package, and change namespaces, from Polly.Caching.MemoryCache to Polly.Caching.Memory, to avoid clashes.
 
      1.1.0
      ---------------------

@@ -1,10 +1,11 @@
 # Polly.Caching.MemoryCache change log
 
 ## 2.0.0
-- The namespaces have changed from Polly.Caching.MemoryCache to Polly.Caching.Memory.
-- removed .net 4 and 4.5 support and added .net standard 2.0 as a target framework.
-- Removed all the projects with the -signed suffix.
-- Reference Polly version 6.0.1.
+- Provide a single signed package only.
+- Reference Polly v6.0.1.
+- Remove .net 4 and 4.5 support. 
+- Add .net standard 2.0 as a target framework.
+- Change namespaces from Polly.Caching.MemoryCache to Polly.Caching.Memory to avoid clashes.
 
 ## 1.1.0
 
