@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <owners>App vNext</owners>
+    <authors>App vNext</authors>
+    <description>
+      Polly.Caching.Memory is a plug-in for the .NET OSS resilience library Polly, supporting System.Runtime.Caching.MemoryCache as a provider for Polly's CachePolicy.
+    </description>
+    <language>en-US</language>
+    <licenseUrl>https://raw.github.com/App-vNext/Polly/master/LICENSE.txt</licenseUrl>
+    <iconUrl>https://raw.github.com/App-vNext/Polly/master/Polly.png</iconUrl>
+    <projectUrl>https://github.com/App-vNext/Polly.Caching.MemoryCache</projectUrl>
+    <tags>Polly Cache Caching Cache-aside</tags>
+    <copyright>Copyright © 2018, App vNext</copyright>
+    <releaseNotes>
+     2.0.0
+     ---------------------
+     - Provide a single signed package only.
+     - Reference Polly v6.0.1.
+     - Remove .net 4 and 4.5 support. 
+     - Add .net standard 2.0 as a target framework.
+     - Rename package, and change namespaces, from Polly.Caching.MemoryCache to Polly.Caching.Memory, to avoid clashes.
+
+     1.1.0
+     ---------------------
+     - Polly.Caching.MemoryCache-Signed now references Polly-Signed 
+     - Reference Polly v5.9.0 to bring in cache fixes
+
+     1.0-RC
+     ---------------------
+     - Upgrade to Polly v5.4.0
+     - Correctly state RC dependency (Polly v5.4.0)
+
+     0.2-alpha
+     ---------------------
+     - Upgrade to msbuild15 build process
+     - Upgrade to Polly v5.3.1
+
+     0.1-alpha
+     ---------------------
+     - Stub repo for Polly.Caching.MemoryCache with first build script
+
+   </releaseNotes>
+    <dependencies>
+      <group targetFramework="netstandard1.3">
+        <dependency id="NETStandard.Library" version="1.6.1" />
+        <dependency id="Polly" version="6.0.1" />
+        <dependency id="Microsoft.Extensions.Caching.Memory" version="1.1.2" />
+      </group>
+      <group targetFramework="netstandard2.0">
+        <dependency id="NETStandard.Library" version="2.0.0" />
+        <dependency id="Polly" version="6.0.1" />
+        <dependency id="Microsoft.Extensions.Caching.Memory" version="2.0.2" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="lib\**\*.*" target="lib" exclude="**\*.unsigned" />
+  </files>
+</package>
