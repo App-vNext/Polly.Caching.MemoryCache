@@ -69,7 +69,7 @@ public class Startup
         services.AddSingleton<Polly.Registry.IPolicyRegistry<string>, Polly.Registry.PolicyRegistry>((serviceProvider) =>
         {
             PolicyRegistry registry = new PolicyRegistry();
-            registry.Add("myCachePolicy", Policy.CacheAsync<HttpResponseMessage>(serviceProvider.GetRequiredService<IAsyncCacheProvider>(), TimeSpan.FromMinutes(5)));
+            registry.Add("myCachePolicy", Policy.CacheAsync<HttpResponseMessage>(serviceProvider.GetRequiredService<IAsyncCacheProvider>().AsyncFor<HttpResponseMessage>(), TimeSpan.FromMinutes(5)));
             return registry;
         });
 
@@ -89,6 +89,11 @@ public MyController(IPolicyRegistry<string> policyRegistry)
 
 For many more configuration options and usage examples of the main Polly `CachePolicy`, see the [main Polly readme](https://github.com/App-vNext/Polly#cache) and [deep doco on the Polly wiki](https://github.com/App-vNext/Polly/wiki/Cache).
 
+## Note
+
+`Polly.Caching.Memory.MemoryCacheProvider : ISyncCacheProvider, IAsyncCacheProvider` is non-generic as the underlying `Microsoft.Extensions.Caching.Memory.IMemoryCache` is non-generic.  However, when defining a generic Polly cache policy `Policy.Cache/CacheAsync<TResult>(...)`, some overloads require a generic `ISyncCacheProvider<TResult>` or `IAsyncCacheProvider<TResult>`.  
+
+In this case, use the extensions methods `MemoryCacheProvider.For<TResult>()` or `MemoryCacheProvider.AsyncFor<TResult>()`, as shown in the ASP.NET Core example above, to obtain a generic `ISyncCacheProvider<TResult>` or `IAsyncCacheProvider<TResult>`.
 
 # Release notes
 
