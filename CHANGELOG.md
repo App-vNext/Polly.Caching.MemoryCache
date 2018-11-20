@@ -1,5 +1,8 @@
 # Polly.Caching.MemoryCache change log
 
+## 2.0.1
+- Upgrade for compatibility with Polly v6.1.1
+
 ## 2.0.0
 - Provide a single signed package only.
 - Reference Polly v6.0.1.
