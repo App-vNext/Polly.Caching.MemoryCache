@@ -78,7 +78,7 @@ else
         public Task<object> GetAsync(string key, CancellationToken cancellationToken, bool continueOnCapturedContext)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            return TaskHelper.FromResult(Get(key));
+            return Task.FromResult(Get(key));
             // (With C#7.0, a ValueTask<> approach would be preferred, but some of our tfms do not support that.  TO DO: Implement it, with preprocessor if/endif directives, for NetStandard)
         }
 
@@ -96,7 +96,7 @@ else
         {
             cancellationToken.ThrowIfCancellationRequested();
             Put(key, value, ttl);
-            return TaskHelper.EmptyTask;
+            return Task.CompletedTask;
             // (With C#7.0, a ValueTask<> approach would be preferred, but some of our tfms do not support that. TO DO: Implement it, with preprocessor if/endif directives, for NetStandard)
         }
     }
