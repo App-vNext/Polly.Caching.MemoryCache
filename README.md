@@ -27,6 +27,11 @@ Polly.Caching.MemoryCache &lt;v2.0 supports .NET4.0, .NET4.5 and .NetStandard 1.
 
 ## Versions and Dependencies
 
+Polly.Caching.Memory &gt;=v3.0 requires:
+
++ [Polly](https://nuget.org/packages/polly) >= v7.0.0.
++ [Microsoft.Extensions.Caching.Memory](https://www.nuget.org/packages/Microsoft.Extensions.Caching.Memory/) v2.0.2 or above (or v1.1.2, for NetStandard 1.3).
+
 Polly.Caching.Memory &gt;=v2.0.1 and &lt;v3 requires:
 
 + [Polly](https://nuget.org/packages/polly) >= v6.1.1 and &lt;v7.
@@ -115,6 +120,7 @@ For details of changes by release see the [change log](CHANGELOG.md).
 * [@seanfarrow](https://github.com/seanfarrow) and [@reisenberger](https://github.com/reisenberger) - Initial caching architecture in the main Polly repo
 * [@kesmy](https://github.com/kesmy) - original structuring of the build for msbuild15, in the main Polly repo
 * [@seanfarrow](https://github.com/seanfarrow) - v2.0 update to Signed packages only to correspond with Polly v6.0.1
+* [@reisenberger](https://github.com/reisenberger) - Update to Polly v7.0.0
 
 
 # Instructions for Contributing
