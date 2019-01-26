@@ -9,6 +9,14 @@
     <Import_RootNamespace>Polly.Caching.Memory.Specs</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Integration\CacheProviderExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Integration\CacheRoundTripspecsAsyncBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Integration\CacheRoundTripSpecsBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Integration\CacheRoundTripSpecsSyncBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Integration\CacheRoundTripSpecs_NetStandardMemoryCacheProvider_Async.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Integration\CacheRoundTripSpecs_NetStandardMemoryCacheProvider_Sync.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Integration\ICachePolicyFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Integration\MemoryCachePolicyFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Unit\MemoryCacheProviderSpecs.cs" />
   </ItemGroup>
 </Project>
