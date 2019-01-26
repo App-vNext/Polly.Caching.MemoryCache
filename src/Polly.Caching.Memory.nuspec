@@ -7,7 +7,7 @@
       Polly.Caching.Memory is a plug-in for the .NET OSS resilience library Polly, supporting System.Runtime.Caching.MemoryCache as a provider for Polly's CachePolicy.
     </description>
     <language>en-US</language>
-    <licenseUrl>https://raw.github.com/App-vNext/Polly/master/LICENSE.txt</licenseUrl>
+    <license type="expression">BSD-3-Clause</license>
     <iconUrl>https://raw.github.com/App-vNext/Polly/master/Polly.png</iconUrl>
     <projectUrl>https://github.com/App-vNext/Polly.Caching.MemoryCache</projectUrl>
     <tags>Polly Cache Caching Cache-aside</tags>
