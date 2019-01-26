@@ -44,32 +44,25 @@ Polly.Caching.MemoryCache v1.* requires:
 
 # How to use the Polly.Caching.Memory plugin
 
-```csharp
-// (1a): Create a MemoryCacheProvider instance in the .NET Framework, using the Polly.Caching.Memory nuget package.
-// (full namespaces and types only shown here for disambiguation)
-Polly.Caching.Memory.MemoryCacheProvider memoryCacheProvider 
-   = new Polly.Caching.Memory.MemoryCacheProvider(System.Runtime.Caching.MemoryCache.Default);
+### Example: Direct creation of CachePolicy (no DI)
 
-// Or (1b): Create a MemoryCacheProvider instance in .NET Core / .NET Standard.
-// (full namespaces and types only shown here for disambiguation)
-// NB Only if you want to create your own Microsoft.Extensions.Caching.Memory.MemoryCache instance:
+```csharp
+// This approach creates a CachePolicy directly, with its own Microsoft.Extensions.Caching.Memory.MemoryCache instance:
 Microsoft.Extensions.Caching.Memory.IMemoryCache memoryCache 
    = new Microsoft.Extensions.Caching.Memory.MemoryCache(new Microsoft.Extensions.Caching.Memory.MemoryCacheOptions());
 Polly.Caching.Memory.MemoryCacheProvider memoryCacheProvider 
    = new Polly.Caching.Memory.MemoryCacheProvider(memoryCache);
 
-// (2) Create a Polly cache policy using that Polly.Caching.Memory.MemoryCacheProvider instance.
+// Create a Polly cache policy using that Polly.Caching.Memory.MemoryCacheProvider instance.
 var cachePolicy = Policy.Cache(memoryCacheProvider, TimeSpan.FromMinutes(5));
+```
 
+### Example: Configure CachePolicy via MemoryCacheProvider in StartUp, for DI
 
+```csharp
+// (We pass a whole PolicyRegistry by dependency injection rather than the individual policy, 
+// on the assumption the app will probably use multiple policies.)
 
-// Or (1c): Configure by dependency injection within ASP.NET Core
-// See https://docs.microsoft.com/en-us/aspnet/core/performance/caching/memory
-// and https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection#registering-your-own-services
-
-// (In this example we choose to pass a whole PolicyRegistry by dependency injection rather than the individual policy, on the assumption the webapp will probably use multiple policies across the app.)
-
-// For example: 
 public class Startup
 {
     public void ConfigureServices(IServiceCollection services)
@@ -77,10 +70,15 @@ public class Startup
         services.AddMemoryCache();
         services.AddSingleton<Polly.Caching.IAsyncCacheProvider, Polly.Caching.Memory.MemoryCacheProvider>();
 
-        services.AddSingleton<Polly.Registry.IPolicyRegistry<string>, Polly.Registry.PolicyRegistry>((serviceProvider) =>
+        services.AddSingleton<Polly.Registry.IReadOnlyPolicyRegistry<string>, Polly.Registry.PolicyRegistry>((serviceProvider) =>
         {
             PolicyRegistry registry = new PolicyRegistry();
-            registry.Add("myCachePolicy", Policy.CacheAsync<HttpResponseMessage>(serviceProvider.GetRequiredService<IAsyncCacheProvider>().AsyncFor<HttpResponseMessage>(), TimeSpan.FromMinutes(5)));
+            registry.Add("myCachePolicy", 
+                Policy.CacheAsync<HttpResponseMessage>(
+                    serviceProvider
+                        .GetRequiredService<IAsyncCacheProvider>()
+                        .AsyncFor<HttpResponseMessage>(),
+                    TimeSpan.FromMinutes(5)));
             return registry;
         });
 
@@ -88,9 +86,9 @@ public class Startup
     }
 }
 
-// In a controller, inject the policyRegistry and retrieve the policy:
+// At the point of use, inject the policyRegistry and retrieve the policy:
 // (magic string "myCachePolicy" only hard-coded here to keep the example simple) 
-public MyController(IPolicyRegistry<string> policyRegistry)
+public MyController(IReadOnlyPolicyRegistry<string> policyRegistry)
 {
     var _cachePolicy = policyRegistry.Get<IAsyncPolicy<HttpResponseMessage>>("myCachePolicy"); 
     // ...
