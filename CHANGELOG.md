@@ -1,5 +1,9 @@
 # Polly.Caching.MemoryCache change log
 
+## 2.0.2
+- No functional changes
+- Indicate compatibility with Polly &lt; v7
+
 ## 2.0.1
 - Upgrade for compatibility with Polly v6.1.1
 
