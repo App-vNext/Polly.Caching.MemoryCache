@@ -42,28 +42,26 @@ namespace Polly.Specs.Caching.Memory.Unit
 
             string key = Guid.NewGuid().ToString();
             object value = new object();
-#if PORTABLE
-            using (Microsoft.Extensions.Caching.Memory.ICacheEntry entry = memoryCache.CreateEntry(key)) { 
+            using (ICacheEntry entry = memoryCache.CreateEntry(key)) { 
                 entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(10);
                 entry.Value = value;
             }
-#else
-            memoryCache[key] = value;
-#endif
 
             MemoryCacheProvider provider = new MemoryCacheProvider(memoryCache);
-            object got = provider.Get(key);
-            got.Should().BeSameAs(value);
+            (bool cacheHit, object payload) = provider.TryGet(key);
+            cacheHit.Should().BeTrue();
+            payload.Should().BeSameAs(value);
         }
 
         [Fact]
-        public void Get_should_return_null_on_unknown_key()
+        public void Get_should_return_false_on_unknown_key()
         {
             IMemoryCache memoryCache = new MemoryCache(new MemoryCacheOptions());
 
             MemoryCacheProvider provider = new MemoryCacheProvider(memoryCache);
-            object got = provider.Get(Guid.NewGuid().ToString());
-            got.Should().BeNull();
+            (bool cacheHit, object payload) = provider.TryGet(Guid.NewGuid().ToString());
+            cacheHit.Should().BeFalse();
+            payload.Should().BeNull();
         }
 
         #endregion
