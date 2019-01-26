@@ -6,7 +6,7 @@ using Xunit;
 using Polly.Caching.Memory;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace Polly.Specs.Caching.Memory
+namespace Polly.Specs.Caching.Memory.Unit
 {
     public class MemoryCacheProviderSpecs
     {
