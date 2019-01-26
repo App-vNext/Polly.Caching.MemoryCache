@@ -13,6 +13,11 @@
     <tags>Polly Cache Caching Cache-aside</tags>
     <copyright>Copyright © 2019, App vNext</copyright>
     <releaseNotes>
+     2.0.2
+     ---------------------
+     - No functional changes
+     - Indicate compatibility with Polly &lt; v7
+
      2.0.1
      ---------------------
      - Upgrade for compatibility with Polly v6.1.1
@@ -48,11 +53,11 @@
     <dependencies>
       <group targetFramework="netstandard1.3">
         <dependency id="NETStandard.Library" version="1.6.1" />
-        <dependency id="Polly" version="6.1.1" />
+        <dependency id="Polly" version="[6.1.1,7)" />
         <dependency id="Microsoft.Extensions.Caching.Memory" version="1.1.2" />
       </group>
       <group targetFramework="netstandard2.0">
-        <dependency id="Polly" version="6.1.1" />
+        <dependency id="Polly" version="[6.1.1,7)" />
         <dependency id="Microsoft.Extensions.Caching.Memory" version="2.0.2" />
       </group>
     </dependencies>
