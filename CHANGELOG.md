@@ -1,4 +1,12 @@
-# Polly.Caching.MemoryCache change log
+# Polly.Caching.Memory change log
+
+## 3.0.0
+- Allow caching of `default(TResult)`
+- Compatible with Polly &gt;= v7
+
+## 2.0.2
+- No functional changes
+- Indicate compatibility with Polly &lt; v7
 
 ## 2.0.2
 - No functional changes

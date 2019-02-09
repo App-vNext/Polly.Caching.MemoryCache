@@ -19,25 +19,23 @@ namespace Polly.Caching.Memory
         /// <param name="memoryCache">The memory cache instance in which to store cached items.</param>
         public MemoryCacheProvider(IMemoryCache memoryCache)
         {
-            if (memoryCache == null) throw new ArgumentNullException(nameof(memoryCache));
-            _cache = memoryCache;
+            _cache = memoryCache ?? throw new ArgumentNullException(nameof(memoryCache));
         }
 
         /// <summary>
         /// Gets a value from cache.
         /// </summary>
         /// <param name="key">The cache key.</param>
-        /// <returns>The value from cache; or null, if none was found.</returns>
-        public object Get(String key)
+        /// <returns>
+        /// A tuple whose first element is a value indicating whether the key was found in the cache,
+        /// and whose second element is the value from the cache (null if not found).
+        /// </returns>
+        public (bool, object) TryGet(string key)
         {
-            object value;
-            if (_cache.TryGetValue(key, out value))
-            {
-                return value;
-            }
-            return null;
+            bool cacheHit = _cache.TryGetValue(key, out var value);
+            return (cacheHit, value);
         }
-        
+
         /// <summary>
         /// Puts the specified value in the cache.
         /// </summary>
@@ -59,7 +57,7 @@ namespace Polly.Caching.Memory
                 {
                     options.AbsoluteExpiration = DateTimeOffset.MaxValue;
                 }
-else
+                else
                 {
                     options.AbsoluteExpirationRelativeToNow = ttl.Timespan < remaining ? ttl.Timespan : remaining;
                 }
@@ -69,17 +67,20 @@ else
         }
 
         /// <summary>
-        /// Gets a value from the memory cache as part of an asynchronous execution.  <para><remarks>The implementation is synchronous as there is no advantage to an asynchronous implementation for an in-memory cache.</remarks></para>
+        /// Gets a value from the cache asynchronously.
+        /// <para><remarks>The implementation is synchronous as there is no advantage to an asynchronous implementation for an in-memory cache.</remarks></para>
         /// </summary>
         /// <param name="key">The cache key.</param>
-        /// <param name="cancellationToken">The cancellation token.  </param>
-        /// <param name="continueOnCapturedContext">Whether async calls should continue on a captured synchronization context. <para><remarks>For <see cref="MemoryCacheProvider"/>, this parameter is irrelevant and is ignored, as the implementation is synchronous.</remarks></para></param>
-        /// <returns>A <see cref="Task{TResult}" /> promising as Result the value from cache; or null, if none was found.</returns>
-        public Task<object> GetAsync(string key, CancellationToken cancellationToken, bool continueOnCapturedContext)
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <param name="continueOnCapturedContext">Whether async calls should continue on a captured synchronization context. <para><remarks>Note: if the underlying cache's async API does not support controlling whether to continue on a captured context, async Policy executions with continueOnCapturedContext == true cannot be guaranteed to remain on the captured context.</remarks></para></param>
+        /// <returns>
+        /// A <see cref="Task{TResult}" /> promising as Result a tuple whose first element is a value indicating whether
+        /// the key was found in the cache, and whose second element is the value from the cache (null if not found).
+        /// </returns>
+        public Task<(bool, object)> TryGetAsync(string key, CancellationToken cancellationToken, bool continueOnCapturedContext)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            return Task.FromResult(Get(key));
-            // (With C#7.0, a ValueTask<> approach would be preferred, but some of our tfms do not support that.  TO DO: Implement it, with preprocessor if/endif directives, for NetStandard)
+            return Task.FromResult(TryGet(key));
         }
 
         /// <summary>
@@ -97,7 +98,6 @@ else
             cancellationToken.ThrowIfCancellationRequested();
             Put(key, value, ttl);
             return Task.CompletedTask;
-            // (With C#7.0, a ValueTask<> approach would be preferred, but some of our tfms do not support that. TO DO: Implement it, with preprocessor if/endif directives, for NetStandard)
         }
     }
 }
