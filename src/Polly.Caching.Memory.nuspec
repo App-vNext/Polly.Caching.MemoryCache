@@ -13,6 +13,11 @@
     <tags>Polly Cache Caching Cache-aside</tags>
     <copyright>Copyright © 2019, App vNext</copyright>
     <releaseNotes>
+     3.0.1
+     ---------------------
+     - No functional changes
+     - Updated Polly dependency to &gt;> v7.0.2, which includes a bug fix for PolicyRegistry
+     
      3.0.0
      ---------------------
      - Allow caching of default(TResult)
