@@ -2,13 +2,18 @@
 
 ## 3.0.2
 - No functional changes
-- Updated NetStandard2.0 dependency to avoid vulnerability in underlying Microsoft.Extensions.Caching.Memory package. Updated dependency to v2.2.0, to avoid vulnerability https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-0786. See https://github.com/App-vNext/Polly.Caching.MemoryCache/issues/37 for more details.
 - Updated Polly dependency to latest, v7.1.1
+- Consolidated solution and fixed build
+- Added NetStandard 2.1 target (for .NET Core3.0 consumption)
+- Added test runs in netcoreapp3.0; .NET Framework 4.6.1; and .NET Framework 4.7.2
+- Updated FluentAssertions and xUnit dependencies
+- Updated NetStandard2.0 dependency to avoid vulnerability for Net Standard 2.0 consumption target in underlying Microsoft.Extensions.Caching.Memory package. Detail:  https://securitytracker.com/id/1040152 ;  https://github.com/App-vNext/Polly.Caching.MemoryCache/issues/37.
+
+_Note:_ This vulnerability was in the underlying Microsoft.Extensions.Caching.Memory package, not in Polly.Caching.MemoryCache.  Consumers should have been aware of this vulnerabilty via their normal Microsoft vulnerability alert mechanisms, and updating Microsoft.Extensions.Caching.Memory in their solutions would have caused Polly.Caching.MemoryCache also to reference the updated version.  However, this update patches Polly.Caching.Memory such that it is not possible to install the latest version v3.0.2 for the .Net Standard 2.0 target and reference a vulnerable underlying version of Microsoft.Extensions.Caching.Memory.
 
 ## 3.0.1
 - No functional changes
 - Updated Polly dependency to &gt;> v7.0.2, which includes a bug fix for PolicyRegistry
-
 
 ## 3.0.0
 - Allow caching of `default(TResult)`

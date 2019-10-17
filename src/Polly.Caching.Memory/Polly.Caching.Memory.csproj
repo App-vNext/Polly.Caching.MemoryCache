@@ -3,11 +3,11 @@
     <TargetFrameworks>netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
     <AssemblyName>Polly.Caching.Memory</AssemblyName>
     <RootNamespace>Polly.Caching.Memory</RootNamespace>
-    <Version>3.0.1</Version>
+    <Version>3.0.2</Version>
     <AssemblyVersion>3.0.0.0</AssemblyVersion>
-    <FileVersion>3.0.1.0</FileVersion>
-    <InformationalVersion>3.0.1.0</InformationalVersion>
-    <PackageVersion>3.0.1</PackageVersion>
+    <FileVersion>3.0.2.0</FileVersion>
+    <InformationalVersion>3.0.2.0</InformationalVersion>
+    <PackageVersion>3.0.2</PackageVersion>
     <Company>App vNext</Company>
     <Copyright>Copyright (c) 2019, App vNext</Copyright>
     <Description>Polly.Caching.Memory is a plug-in for the .NET OSS resilience library Polly, supporting Microsoft.Extensions.Caching.Memory.MemoryCache as a provider for Polly's CachePolicy.</Description>
