@@ -1,5 +1,15 @@
 # Polly.Caching.Memory change log
 
+## 3.0.2
+- No functional changes
+- Updated NetStandard2.0 dependency to avoid vulnerability in underlying Microsoft.Extensions.Caching.Memory package. Updated dependency to v2.2.0, to avoid vulnerability https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-0786. See https://github.com/App-vNext/Polly.Caching.MemoryCache/issues/37 for more details.
+- Updated Polly dependency to latest, v7.1.1
+
+## 3.0.1
+- No functional changes
+- Updated Polly dependency to &gt;> v7.0.2, which includes a bug fix for PolicyRegistry
+
+
 ## 3.0.0
 - Allow caching of `default(TResult)`
 - Compatible with Polly &gt;= v7

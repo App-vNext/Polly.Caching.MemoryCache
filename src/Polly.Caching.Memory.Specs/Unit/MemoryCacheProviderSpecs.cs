@@ -6,7 +6,7 @@ using Xunit;
 using Polly.Caching.Memory;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace Polly.Specs.Caching.Memory.Unit
+namespace Polly.Caching.Memory.Specs.Unit
 {
     public class MemoryCacheProviderSpecs
     {
@@ -17,7 +17,7 @@ namespace Polly.Specs.Caching.Memory.Unit
         {
            Action configure = () => new MemoryCacheProvider(null);
 
-            configure.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("memoryCache");
+            configure.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("memoryCache");
 
         }
 
@@ -28,7 +28,7 @@ namespace Polly.Specs.Caching.Memory.Unit
 
             Action configure = () => new MemoryCacheProvider(memoryCache);
 
-            configure.ShouldNotThrow();
+            configure.Should().NotThrow();
         }
 
         #endregion

@@ -27,7 +27,7 @@ namespace Polly.Caching.Memory.Specs.Integration
                     underlyingDelegateExecuteCount++;
                     return testValue;
                 }, new Context(OperationKey))
-                .ShouldBeEquivalentTo(testValue);
+                .Should().BeEquivalentTo(testValue);
 
             // Assert - should have executed underlying delegate
             underlyingDelegateExecuteCount.Should().Be(1);
@@ -35,7 +35,7 @@ namespace Polly.Caching.Memory.Specs.Integration
             // Assert - should be in cache
             (bool cacheHit2, TResult fromCache2) = cacheProvider.TryGet(OperationKey);
             cacheHit2.Should().BeTrue();
-            fromCache2.ShouldBeEquivalentTo(testValue);
+            fromCache2.Should().BeEquivalentTo(testValue);
 
             // Act - should execute underlying delegate and place in cache
             cache.Execute(ctx =>
@@ -43,7 +43,7 @@ namespace Polly.Caching.Memory.Specs.Integration
                     underlyingDelegateExecuteCount++;
                     throw new Exception("Cache should be used so this should not get invoked.");
                 }, new Context(OperationKey))
-                .ShouldBeEquivalentTo(testValue);
+                .Should().BeEquivalentTo(testValue);
             underlyingDelegateExecuteCount.Should().Be(1);
 
             return Task.CompletedTask;
