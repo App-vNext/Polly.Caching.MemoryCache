@@ -1,12 +1,12 @@
 # Polly.Caching.Memory
 
-This repo contains the MemoryCache plugin for the [Polly](https://github.com/App-vNext/Polly) [Cache policy](https://github.com/App-vNext/Polly/wiki/Cache).  The current version targets .NET Standard 1.3 and .NET Standard 2.0.
+This repo contains the MemoryCache plugin for the [Polly](https://github.com/App-vNext/Polly) [Cache policy](https://github.com/App-vNext/Polly/wiki/Cache).  The current version targets .NET Standard 1.3 (for .NET Core1.x), .NET Standard 2.0 (for .NET Core 2.x and .NET Framework 4.x), and .NET Standard 2.1 (for .NET Core 3.x).
 
 [![NuGet version](https://badge.fury.io/nu/Polly.Caching.Memory.svg)](https://badge.fury.io/nu/Polly.Caching.Memory) [![Build status](https://ci.appveyor.com/api/projects/status/pgd89nfdr9u4ig8m?svg=true)](https://ci.appveyor.com/project/joelhulen/polly-caching-Memory) [![Slack Status](http://www.pollytalk.org/badge.svg)](http://www.pollytalk.org)
 
 ## What is Polly?
 
-[Polly](https://github.com/App-vNext/Polly) is a .NET resilience and transient-fault-handling library that allows developers to express policies such as Retry, Circuit Breaker, Timeout, Bulkhead Isolation, Cache aside and Fallback in a fluent and thread-safe manner. Polly targets .NET Standard 1.1 and .NET Standrad 2.0. 
+[Polly](https://github.com/App-vNext/Polly) is a .NET resilience and transient-fault-handling library that allows developers to express policies such as Retry, Circuit Breaker, Timeout, Bulkhead Isolation, Cache aside and Fallback in a fluent and thread-safe manner.
 
 Polly is a member of the [.NET Foundation](https://www.dotnetfoundation.org/about)!
 
@@ -21,31 +21,33 @@ Polly is a member of the [.NET Foundation](https://www.dotnetfoundation.org/abou
 
 # Supported targets
 
+Polly.Caching.Memory &gt;= v3.0.2 supports .NET Standard 1.3, .NET Standard 2.0 and .NET Standard 2.1.
+
 Polly.Caching.Memory &gt;= v2.0 supports .NET Standard 1.3 and .NET Standard 2.0.
 
 Polly.Caching.MemoryCache &lt;v2.0 supports .NET4.0, .NET4.5 and .NetStandard 1.3
 
-## Versions and Dependencies
+## Dependency compatibility with Polly
 
-Polly.Caching.Memory &gt;=v3.0 requires:
+Polly.Caching.Memory &gt;=v3.0.2 requires:
+
++ [Polly](https://nuget.org/packages/polly) >= v7.1.1.
+
+Polly.Caching.Memory &gt;=v3.0 amd &lt;v3.0.2 requires:
 
 + [Polly](https://nuget.org/packages/polly) >= v7.0.0.
-+ [Microsoft.Extensions.Caching.Memory](https://www.nuget.org/packages/Microsoft.Extensions.Caching.Memory/) v2.0.2 or above (or v1.1.2, for NetStandard 1.3).
 
 Polly.Caching.Memory &gt;=v2.0.1 and &lt;v3 requires:
 
 + [Polly](https://nuget.org/packages/polly) >= v6.1.1 and &lt;v7.
-+ [Microsoft.Extensions.Caching.Memory](https://www.nuget.org/packages/Microsoft.Extensions.Caching.Memory/) v2.0.2 or above (or v1.1.2, for NetStandard 1.3).
 
 Polly.Caching.Memory v2.0.0 requires:
 
 + [Polly](https://nuget.org/packages/polly) >= v6.0.1 and &lt;=v6.1.0.
-+ [Microsoft.Extensions.Caching.Memory](https://www.nuget.org/packages/Microsoft.Extensions.Caching.Memory/) v2.0.2 or above (or v1.1.2, for NetStandard 1.3).
 
 Polly.Caching.MemoryCache v1.* requires:
 
 + [Polly](https://nuget.org/packages/polly) >=v5.9.0 and &lt;v6.
-+ [Microsoft.Extensions.Caching.Memory](https://www.nuget.org/packages/Microsoft.Extensions.Caching.Memory/) v1.1.2, for NetStandard 1.3.
 
 # How to use the Polly.Caching.Memory plugin
 

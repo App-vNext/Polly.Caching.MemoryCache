@@ -77,8 +77,7 @@ namespace Polly.Caching.Memory.Specs.Integration
             {
                 "some string",
                 "",
-                null,
-                default(string),
+                null, // == default(string),
                 "null"
             };
 
@@ -86,9 +85,8 @@ namespace Polly.Caching.Memory.Specs.Integration
             new TheoryData<int>
             {
                 -1,
-                0,
-                1,
-                default(int)
+                0, // == default(int)
+                1
             };
 
         public static TheoryData<SampleEnum> SampleEnumData =>
@@ -103,8 +101,7 @@ namespace Polly.Caching.Memory.Specs.Integration
             new TheoryData<bool>
             {
                 true,
-                false,
-                default(bool),
+                false, // == default(bool),
             };
 
         public static TheoryData<bool?> SampleNullableBoolData =>
@@ -112,8 +109,7 @@ namespace Polly.Caching.Memory.Specs.Integration
             {
                 true,
                 false,
-                null,
-                default(bool?),
+                null, // == default(bool?),
             };
 
         public class SampleClass
@@ -124,6 +120,7 @@ namespace Polly.Caching.Memory.Specs.Integration
 
         public enum SampleEnum
         {
+            Default,
             FirstValue,
             SecondValue,
         }
